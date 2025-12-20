@@ -352,7 +352,7 @@
             visibility: visible;
         }
 
-        /* ====== HERO SECTION - UPDATED FOR BETTER MOBILE RESPONSIVENESS ====== */
+        /* ====== HERO SECTION - FIXED FOR BETTER VISIBILITY ====== */
         .hero-section {
             padding-top: 180px;
             padding-bottom: 120px;
@@ -360,8 +360,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            background-color: var(--dark-gray);
-            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            background: linear-gradient(135deg, #0a192f 0%, #0f1b2e 100%);
         }
 
         .hero-section .hero-bg-container {
@@ -379,7 +378,10 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(30, 41, 59, 0.9) 100%);
+            background: linear-gradient(135deg, 
+                rgba(10, 25, 47, 0.7) 0%, 
+                rgba(15, 27, 46, 0.8) 50%,
+                rgba(37, 99, 235, 0.3) 100%);
             z-index: 1;
         }
 
@@ -390,8 +392,9 @@
             position: absolute;
             top: 0;
             left: 0;
-            opacity: 0.4;
-            filter: brightness(0.7) contrast(1.2);
+            opacity: 0.6; /* Increased from 0.4 */
+            filter: brightness(0.9) contrast(1.1); /* Brighter with more contrast */
+            z-index: 0;
         }
 
         .hero-content {
@@ -403,52 +406,52 @@
         }
 
         .hero-content h1 {
-            font-size: clamp(2rem, 5vw, 4rem); /* Responsive font size */
+            font-size: clamp(2rem, 5vw, 4rem);
             font-weight: 800;
             line-height: 1.2;
             margin-bottom: 24px;
             letter-spacing: -0.5px;
-            background: linear-gradient(135deg, #ffffff 0%, #60a5fa 100%);
+            background: linear-gradient(135deg, #ffffff 0%, #a5b4fc 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
-            text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
             word-wrap: break-word;
             overflow-wrap: break-word;
         }
 
         .hero-content .lead-text {
-            font-size: clamp(1rem, 2.5vw, 1.5rem); /* Responsive font size */
+            font-size: clamp(1rem, 2.5vw, 1.5rem);
             font-weight: 400;
             line-height: 1.5;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95); /* Brighter white */
             max-width: 800px;
             margin: 0 auto 1.5rem;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
             word-wrap: break-word;
             overflow-wrap: break-word;
             padding: 0 10px;
         }
 
         .hero-content h3 {
-            font-size: clamp(1.25rem, 3vw, 1.75rem); /* Responsive font size */
+            font-size: clamp(1.25rem, 3vw, 1.75rem);
             font-weight: 700;
             line-height: 1.3;
             margin: 1.5rem 0;
-            color: #60a5fa;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            color: #a5b4fc; /* Brighter blue tint */
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
             word-wrap: break-word;
             overflow-wrap: break-word;
             padding: 0 10px;
         }
 
         .hero-content h2 {
-            font-size: clamp(1.5rem, 4vw, 2.5rem); /* Responsive font size */
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
             font-weight: 700;
             line-height: 1.2;
             margin: 1.5rem 0;
-            color: white;
-            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+            color: #ffffff; /* Pure white */
+            text-shadow: 0 2px 15px rgba(0, 0, 0, 0.3);
             word-wrap: break-word;
             overflow-wrap: break-word;
             padding: 0 10px;
@@ -1302,6 +1305,20 @@
                 margin: 1.2rem 0;
             }
             
+            /* Additional text shadow for better readability on mobile */
+            .hero-content h1 {
+                text-shadow: 0 2px 25px rgba(0, 0, 0, 0.4);
+            }
+            
+            .hero-content .lead-text {
+                text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+            }
+            
+            .hero-content h3,
+            .hero-content h2 {
+                text-shadow: 0 1px 10px rgba(0, 0, 0, 0.4);
+            }
+            
             /* Hero CTA Button Mobile */
             .hero-cta-button {
                 padding: 14px 30px;
@@ -1712,12 +1729,12 @@
         <div class="overlay" id="overlay"></div>
     </header>
 
-    <!-- Hero Section - UPDATED WITH DARK THEME AND STUNNING BACKGROUND -->
+    <!-- Hero Section - FIXED WITH BRIGHTER BACKGROUND AND BETTER TEXT READABILITY -->
     <section class="hero-section">
         <div class="hero-bg-container">
             <div class="hero-bg-overlay"></div>
-            <!-- New stunning graphic design background image -->
-            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Abstract Graphic Design Background" class="hero-bg-image">
+            <!-- Brighter alternative background image -->
+            <img src="https://images.unsplash.com/photo-1626785774573-4b799315345d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80" alt="Bright Abstract Design Background" class="hero-bg-image">
         </div>
         <div class="container">
             <div class="hero-content">
@@ -1827,7 +1844,18 @@
             
             <div class="benefits-grid">
                 <!-- Benefit Card 1 - Memorable Brand Identity -->
-                
+                <div class="benefit-card">
+                    <!-- Memorable brand image -->
+                    <img src="https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80" alt="Memorable Brand Identity" class="benefit-card-bg">
+                    <div class="benefit-card-overlay"></div>
+                    <div class="benefit-card-content">
+                        <div class="benefit-icon">
+                            <i class="fas fa-brain"></i>
+                        </div>
+                        <h3>Memorable Brand Identity</h3>
+                        <p>A strong visual identity makes your brand instantly recognizable. We create cohesive designs that embed your brand in the minds of your audience, fostering loyalty and recall.</p>
+                    </div>
+                </div>
                 
                 <!-- Benefit Card 2 - Increased Engagement -->
                 <div class="benefit-card">
