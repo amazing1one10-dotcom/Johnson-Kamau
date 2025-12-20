@@ -325,7 +325,6 @@
             backface-visibility: hidden;
             image-rendering: -webkit-optimize-contrast;
             image-rendering: crisp-edges;
-            image-rendering: pixelated;
             -webkit-font-smoothing: subpixel-antialiased;
             transform: translateZ(0);
             filter: brightness(1.02) contrast(1.05);
@@ -1224,7 +1223,7 @@
             <!-- Paintings Section -->
             <section id="paintings" class="category-section active" role="tabpanel" aria-labelledby="paintings-tab">
                 <div class="gallery-grid">
-                    <!-- Fixed image paths - ensure all images exist -->
+                    <!-- FIXED: All 5 painting cards from original code -->
                     <article class="art-card" tabindex="0" data-art-id="painting-1">
                         <div class="card-image-container" 
                              data-title="Azure Resonance"
@@ -1233,9 +1232,9 @@
                              data-description="A contemporary exploration of texture and color, where deep blues merge with metallic gold leaf to create a sense of depth and movement."
                              data-dimensions="150 × 200 cm"
                              data-location="Studio 42, Berlin"
-                             data-images='["Screens/1.png","Screens/2.png","Screens/3.png"]'>
+                             data-images='["Screens/1.png","Screens/2.png","Screens/3.png","Screens/4.png","Screens/5.png","Screens/6.png","Screens/7.png","Screens/8.png","Screens/9.png","Screens/10.png","Screens/11.png","Screens/12.png","Screens/13.png","Screens/14.png","Screens/15.png","Screens/16.png","Screens/17.png","Screens/18.png","Screens/19.png","Screens/20.png","Screens/21.png","Screens/22.png","Screens/23.png","Screens/24.png","Screens/25.png","Screens/26.png","Screens/27.png","Screens/28.png","Screens/29.png"]'>
                             <img src="Screens/1.png" alt="Azure Resonance - Main view" class="card-image" loading="eager">
-                            <div class="multiple-images-indicator">3</div>
+                            <div class="multiple-images-indicator">28</div>
                             <div class="card-overlay">
                                 <h3 class="overlay-title">Azure Resonance</h3>
                                 <p class="overlay-artist">Maya Chen</p>
@@ -1257,9 +1256,9 @@
                              data-description="Layered textures of earth pigments, sand, and acrylic create a tactile surface that references archaeological strata."
                              data-dimensions="120 × 180 cm"
                              data-location="Private Collection"
-                             data-images='["Assets/1.jpg","Assets/2.jpg","Assets/3.jpg"]'>
+                             data-images='["Assets/1.jpg","Assets/2.jpg","Assets/3.jpg","Assets/4.jpg","Assets/5.jpg","Assets/6.jpg"]'>
                             <img src="Assets/1.jpg" alt="Terracotta Memories - Main view" class="card-image" loading="eager">
-                            <div class="multiple-images-indicator">3</div>
+                            <div class="multiple-images-indicator">6</div>
                             <div class="card-overlay">
                                 <h3 class="overlay-title">Terracotta Memories</h3>
                                 <p class="overlay-artist">James Rivera</p>
@@ -1281,9 +1280,9 @@
                              data-description="Precision and geometry meet organic imperfection in this systematic exploration of form."
                              data-dimensions="90 × 90 cm"
                              data-location="Modern Art Museum, Tokyo"
-                             data-images='["Drone/1.jpg","Drone/2.jpg","Drone/3.jpg"]'>
+                             data-images='["Drone/1.jpg","Drone/2.jpg","Drone/3.jpg","Drone/4.jpg","Drone/5.jpg"]'>
                             <img src="Drone/1.jpg" alt="Construct No. 14 - Main view" class="card-image" loading="eager">
-                            <div class="multiple-images-indicator">3</div>
+                            <div class="multiple-images-indicator">5</div>
                             <div class="card-overlay">
                                 <h3 class="overlay-title">Construct No. 14</h3>
                                 <p class="overlay-artist">Sarah Klein</p>
@@ -1296,10 +1295,218 @@
                             <p class="art-meta">Acrylic on wood</p>
                         </div>
                     </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="painting-4">
+                        <div class="card-image-container" 
+                             data-title="Vermilion Dawn"
+                             data-artist="Alexandre Dubois"
+                             data-meta="2023 • Oil and resin"
+                             data-description="A study in color transitions, capturing the moment when night gives way to morning light."
+                             data-dimensions="100 × 150 cm"
+                             data-location="Gallery Nord, Paris"
+                             data-images='["Town House/1.png","Town House/2.png","Town House/3.png","Town House/4.png","Town House/5.png","Town House/6.png","Town House/7.png","Town House/8.png","Town House/9.png","Town House/10.png"]'>
+                            <img src="Town House/1.png" alt="Vermilion Dawn - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">10</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Vermilion Dawn</h3>
+                                <p class="overlay-artist">Alexandre Dubois</p>
+                                <p class="overlay-meta">2023 • Oil and resin</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Vermilion Dawn</h3>
+                            <p class="artist-name">Alexandre Dubois</p>
+                            <p class="art-meta">Oil and resin</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="painting-5">
+                        <div class="card-image-container" 
+                             data-title="Ethereal Forms"
+                             data-artist="Isabella Rossi"
+                             data-meta="2022 • Watercolor on paper"
+                             data-description="Delicate washes of color create fluid, organic shapes that seem to float across the surface."
+                             data-dimensions="70 × 100 cm"
+                             data-location="Contemporary Arts Center, Milan"
+                             data-images='["Landing/1.png","Landing/2.png","Landing/3.png","Landing/4.png","Landing/5.png"]'>
+                            <img src="Landing/1.png" alt="Ethereal Forms - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">5</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Ethereal Forms</h3>
+                                <p class="overlay-artist">Isabella Rossi</p>
+                                <p class="overlay-meta">2022 • Watercolor on paper</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Ethereal Forms</h3>
+                            <p class="artist-name">Isabella Rossi</p>
+                            <p class="art-meta">Watercolor on paper</p>
+                        </div>
+                    </article>
                 </div>
             </section>
 
-            <!-- Other sections remain similar but with fixed image paths -->
+            <!-- Photography Section -->
+            <section id="photography" class="category-section" role="tabpanel" aria-labelledby="photography-tab" hidden>
+                <div class="gallery-grid">
+                    <!-- FIXED: All 2 photography cards from original code -->
+                    <article class="art-card" tabindex="0" data-art-id="photo-1">
+                        <div class="card-image-container" 
+                             data-title="Alpine Silence"
+                             data-artist="Thomas Weber"
+                             data-meta="2022 • Silver gelatin print"
+                             data-description="Shot at dawn in the Swiss Alps, this long-exposure photograph captures the ephemeral quality of mountain light."
+                             data-dimensions="40 × 60 cm"
+                             data-location="Mountain Photography Archive, Zurich"
+                             data-images='["L Art/Asset 5.jpg","L Art/Asset 6.jpg","L Art/Asset 7.jpg","L Art/Asset 8.jpg"]'>
+                            <img src="L Art/Asset 5.jpg" alt="Alpine Silence - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">4</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Alpine Silence</h3>
+                                <p class="overlay-artist">Thomas Weber</p>
+                                <p class="overlay-meta">2022 • Silver gelatin print</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Alpine Silence</h3>
+                            <p class="artist-name">Thomas Weber</p>
+                            <p class="art-meta">Silver gelatin print</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="photo-2">
+                        <div class="card-image-container" 
+                             data-title="Urban Geometry"
+                             data-artist="Aisha Patel"
+                             data-meta="2023 • Digital C-print"
+                             data-description="An exploration of architectural patterns in Mumbai's contemporary buildings."
+                             data-dimensions="50 × 75 cm"
+                             data-location="Architectural Photography Museum, Mumbai"
+                             data-images='["Johnson/Asset 3.jpg","Johnson/Asset 2.jpg","Johnson/Asset 4.jpg","Johnson/Asset 5.jpg","Johnson/Asset 6.jpg","Johnson/Asset 7.jpg","Johnson/Asset 8.jpg","Johnson/Asset 9.jpg","Johnson/Asset 10.jpg","Johnson/Asset 11.jpg"]'>
+                            <img src="Johnson/Asset 3.jpg" alt="Urban Geometry - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">10</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Urban Geometry</h3>
+                                <p class="overlay-artist">Aisha Patel</p>
+                                <p class="overlay-meta">2023 • Digital C-print</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Urban Geometry</h3>
+                            <p class="artist-name">Aisha Patel</p>
+                            <p class="art-meta">Digital C-print</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Sculptures Section -->
+            <section id="sculptures" class="category-section" role="tabpanel" aria-labelledby="sculptures-tab" hidden>
+                <div class="gallery-grid">
+                    <!-- FIXED: All 2 sculpture cards from original code -->
+                    <article class="art-card" tabindex="0" data-art-id="sculpture-1">
+                        <div class="card-image-container" 
+                             data-title="Form in Motion"
+                             data-artist="Carlos Mendez"
+                             data-meta="2021 • Bronze"
+                             data-description="Cast using the lost-wax technique, this bronze sculpture captures dynamic tension between solid form and implied movement."
+                             data-dimensions="180 × 90 × 60 cm"
+                             data-location="Sculpture Park, Madrid"
+                             data-images='["Medipharma/Start.png","Medipharma/Register.png","Medipharma/Sign In.png","Medipharma/OTP.png","Medipharma/Success.png","Medipharma/Onboard 1.png","Medipharma/Onboard 2.png","Medipharma/Onboard 3.png","Medipharma/Splash Screen.png","Medipharma/Landing Screen.png","Medipharma/Category.png","Medipharma/Categgory.png","Medipharma/Prescription Upload.png","Medipharma/Product Description Screen.png","Medipharma/Location.png","Medipharma/Medibag.png","Medipharma/Medicine Bag.png","Medipharma/My Orders.png","Medipharma/Check Out.png","Medipharma/Payment Method.png","Medipharma/Card Details.png","Medipharma/Success.png","Medipharma/Menu.png"]'>
+                            <img src="Medipharma/Start.png" alt="Form in Motion - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">23</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Form in Motion</h3>
+                                <p class="overlay-artist">Carlos Mendez</p>
+                                <p class="overlay-meta">2021 • Bronze</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Form in Motion</h3>
+                            <p class="artist-name">Carlos Mendez</p>
+                            <p class="art-meta">Bronze</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="sculpture-2">
+                        <div class="card-image-container" 
+                             data-title="Echoes of Time"
+                             data-artist="Giovanni Russo"
+                             data-meta="2020 • Carrara marble"
+                             data-description="Carved from a single block of Carrara marble, this work references classical forms while introducing contemporary fracture lines."
+                             data-dimensions="220 × 80 × 80 cm"
+                             data-location="Classical Arts Museum, Rome"
+                             data-images='["Solva Concept/1.jpg","Solva Concept/2.jpg","Solva Concept/3.jpg","Solva Concept/4.jpg","Solva Concept/5.jpg","Solva Concept/6.jpg","Solva Concept/7.jpg","Solva Concept/8.jpg"]'>
+                            <img src="Solva Concept/1.jpg" alt="Echoes of Time - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">8</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Echoes of Time</h3>
+                                <p class="overlay-artist">Giovanni Russo</p>
+                                <p class="overlay-meta">2020 • Carrara marble</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Echoes of Time</h3>
+                            <p class="artist-name">Giovanni Russo</p>
+                            <p class="art-meta">Carrara marble</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Digital Art Section -->
+            <section id="digital" class="category-section" role="tabpanel" aria-labelledby="digital-tab" hidden>
+                <div class="gallery-grid">
+                    <!-- FIXED: All 2 digital art cards from original code -->
+                    <article class="art-card" tabindex="0" data-art-id="digital-1">
+                        <div class="card-image-container" 
+                             data-title="Neural Bloom"
+                             data-artist="Zara Kim"
+                             data-meta="2023 • Generative algorithm"
+                             data-description="A real-time generative artwork created using custom machine learning algorithms."
+                             data-dimensions="Digital, variable dimensions"
+                             data-location="Digital Arts Foundation, Seoul"
+                             data-images='["Solva Concept/Solva Concept_page-0001.jpg","Solva Concept/Solva Concept_page-0002.jpg","Solva Concept/Solva Concept_page-0003.jpg","Solva Concept/Solva Concept_page-0004.jpg","Solva Concept/Solva Concept_page-0005.jpg","Solva Concept/Solva Concept_page-0006.jpg"]'>
+                            <img src="Solva Concept/Solva Concept_page-0001.jpg" alt="Neural Bloom - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">6</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Neural Bloom</h3>
+                                <p class="overlay-artist">Zara Kim</p>
+                                <p class="overlay-meta">2023 • Generative algorithm</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Neural Bloom</h3>
+                            <p class="artist-name">Zara Kim</p>
+                            <p class="art-meta">Generative algorithm</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="digital-2">
+                        <div class="card-image-container" 
+                             data-title="Synthetic Horizons"
+                             data-artist="Alexei Volkov"
+                             data-meta="2022 • 3D rendering"
+                             data-description="A virtual landscape constructed from photogrammetry data of real locations."
+                             data-dimensions="Digital, 4K resolution"
+                             data-location="Virtual Arts Museum, Moscow"
+                             data-images='["Mock Ups/1.png","Mock Ups/2.png","Mock Ups/3.png","Mock Ups/4.png","Mock Ups/5.png","Mock Ups/6.png","Mock Ups/7.png","Mock Ups/8.png","Mock Ups/9.png","Mock Ups/10.png","Mock Ups/11b.png","Mock Ups/12.png","Mock Ups/13.png","Mock Ups/14.png","Mock Ups/15.png","Mock Ups/16.png","Mock Ups/17.png","Mock Ups/18.png","Mock Ups/19.png","Mock Ups/20.png","Mock Ups/21.png","Mock Ups/22.png","Mock Ups/23.png","Mock Ups/24.png"]'>
+                            <img src="Mock Ups/1.png" alt="Synthetic Horizons - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">24</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Synthetic Horizons</h3>
+                                <p class="overlay-artist">Alexei Volkov</p>
+                                <p class="overlay-meta">2022 • 3D rendering</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Synthetic Horizons</h3>
+                            <p class="artist-name">Alexei Volkov</p>
+                            <p class="art-meta">3D rendering</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
         </main>
     </div>
 
@@ -1388,6 +1595,9 @@
                     
                     // Force hardware acceleration for better rendering
                     img.style.transform = 'translateZ(0)';
+                    
+                    // Add slight brightness/contrast for clarity
+                    img.style.filter = 'brightness(1.02) contrast(1.05)';
                 });
             };
 
@@ -1464,6 +1674,7 @@
                         
                         // Preload images for the new section
                         setTimeout(preloadImages, 100);
+                        setTimeout(optimizeImageQuality, 150);
                     }
                 });
             });
