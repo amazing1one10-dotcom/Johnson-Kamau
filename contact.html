@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Johnson Kamau Mwangi</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #001f3f;
+            --navy-light: #0a2d56;
+            --navy-dark: #001122;
+            --white: #ffffff;
+            --black: #000000;
+            --natural-blue: #4a6fa5;
+            --natural-green: #6b8e6b;
+            --natural-clay: #c67b5f;
+            --gray-light: #f5f5f7;
+            --gray-medium: #e0e0e0;
+            --gray-dark: #8a8a8a;
+            --success-green: #2ecc71;
+            --error-red: #e74c3c;
+            --transition: all 0.3s ease;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12);
+            --border-radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--black);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--navy);
+        }
+
+        p, span, a, li, label, input, textarea, select, button {
+            color: var(--black);
+        }
+
+        .white-text {
+            color: var(--white) !important;
+        }
+
+        .navy-text {
+            color: var(--navy) !important;
+        }
+
+        .black-text {
+            color: var(--black) !important;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 20px 0;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--navy);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            font-size: 1.5rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+            position: relative;
+            color: var(--navy);
+        }
+
+        .nav-links a:hover {
+            color: var(--natural-clay);
+        }
+
+        .nav-links a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--natural-clay);
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover:after {
+            width: 100%;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--navy);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 80px 0 40px;
+            background: linear-gradient(135deg, var(--white) 0%, #f9f9f9 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(74, 111, 165, 0.1) 0%, rgba(74, 111, 165, 0) 70%);
+            top: -100px;
+            right: -100px;
+            z-index: 0;
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 3.2rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-text h1 span {
+            position: relative;
+            display: inline-block;
+        }
+
+        .hero-text h1 span::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 8px;
+            background-color: rgba(74, 111, 165, 0.2);
+            bottom: 5px;
+            left: 0;
+            z-index: -1;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--gray-dark);
+            margin-bottom: 30px;
+        }
+
+        .hero-visual {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .floating-shapes {
+            position: relative;
+            width: 100%;
+            height: 400px;
+        }
+
+        .shape {
+            position: absolute;
+            border-radius: var(--border-radius);
+            opacity: 0.9;
+            transition: var(--transition);
+        }
+
+        .shape-1 {
+            width: 200px;
+            height: 200px;
+            background: linear-gradient(135deg, var(--natural-blue), #6b8e6b);
+            top: 0;
+            left: 0;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .shape-2 {
+            width: 150px;
+            height: 150px;
+            background: linear-gradient(135deg, var(--natural-green), #4a6fa5);
+            bottom: 0;
+            right: 0;
+            animation: float 8s ease-in-out infinite 1s;
+        }
+
+        .shape-3 {
+            width: 100px;
+            height: 100px;
+            background-color: var(--natural-clay);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @keyframes rotate {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+
+        /* Contact Form */
+        .contact-section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+
+        .section-title p {
+            color: var(--gray-dark);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+        }
+
+        .contact-form {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 40px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .contact-form:hover {
+            box-shadow: var(--shadow-hover);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .form-group .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 42px;
+            color: var(--gray-dark);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            border: 1px solid var(--gray-medium);
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 1rem;
+            transition: var(--transition);
+            background-color: var(--white);
+            color: var(--black);
+        }
+
+        .form-group textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--natural-blue);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+        }
+
+        .submit-btn {
+            background-color: var(--navy);
+            color: white;
+            border: none;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            width: 100%;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        .submit-btn:hover {
+            background-color: var(--navy-light);
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 31, 63, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Contact Info Cards */
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .info-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 30px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .info-card.map-card {
+            cursor: pointer;
+            position: relative;
+        }
+
+        .info-card.map-card:hover .info-icon {
+            background-color: rgba(74, 111, 165, 0.2);
+            transform: scale(1.1);
+        }
+
+        .map-preview {
+            margin-top: 15px;
+            border-radius: 8px;
+            overflow: hidden;
+            height: 0;
+            transition: height 0.3s ease;
+            position: relative;
+        }
+
+        .info-card.map-card:hover .map-preview {
+            height: 150px;
+        }
+
+        .map-preview-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .info-card.map-card:hover .map-preview-image {
+            opacity: 1;
+        }
+
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 31, 63, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.9rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .info-card.map-card:hover .map-overlay {
+            opacity: 1;
+        }
+
+        .info-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(74, 111, 165, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: var(--natural-blue);
+            font-size: 1.5rem;
+            transition: var(--transition);
+        }
+
+        .info-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+        }
+
+        .info-content p {
+            color: var(--gray-dark);
+            margin-bottom: 5px;
+        }
+
+        .copy-btn {
+            background: none;
+            border: none;
+            color: var(--natural-blue);
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 5px 0;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .copy-btn:hover {
+            color: var(--navy);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--navy);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--natural-blue);
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* FAQ Section */
+        .faq-section {
+            padding: 80px 0;
+            background-color: var(--gray-light);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .faq-question {
+            padding: 25px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .faq-question h3 {
+            font-size: 1.2rem;
+        }
+
+        .faq-icon {
+            color: var(--natural-blue);
+            font-size: 1.2rem;
+            transition: var(--transition);
+        }
+
+        .faq-answer {
+            padding: 0 30px;
+            max-height: 0;
+            overflow: hidden;
+            transition: var(--transition);
+            color: var(--gray-dark);
+        }
+
+        .faq-item.active .faq-question {
+            background-color: rgba(74, 111, 165, 0.05);
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-item.active .faq-answer {
+            padding-bottom: 25px;
+            max-height: 300px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-column h3 {
+            color: var(--white);
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+        }
+
+        .footer-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 900;
+            font-size: 1.8rem;
+            color: var(--white);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .footer-column p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            transition: var(--transition);
+            display: inline-block;
+        }
+
+        .footer-links a:hover {
+            color: var(--white);
+            transform: translateX(5px);
+        }
+
+        .footer-social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .footer-social-link {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--white);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-social-link:hover {
+            background-color: var(--natural-blue);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--navy);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            font-size: 1.2rem;
+            box-shadow: 0 5px 15px rgba(0, 31, 63, 0.4);
+            transition: var(--transition);
+            opacity: 0;
+            visibility: hidden;
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            background-color: var(--navy-light);
+            transform: translateY(-5px);
+        }
+
+        /* Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1001;
+            opacity: 0;
+            visibility: hidden;
+            transition: var(--transition);
+        }
+
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-content {
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            padding: 50px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            transform: translateY(30px);
+            transition: var(--transition);
+        }
+
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-icon {
+            font-size: 4rem;
+            color: var(--natural-blue);
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .modal p {
+            color: var(--gray-dark);
+            margin-bottom: 30px;
+        }
+
+        .close-modal {
+            background-color: var(--navy);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 8px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-modal:hover {
+            background-color: var(--navy-light);
+        }
+
+        /* Google Maps Modal */
+        .map-modal {
+            z-index: 1002;
+        }
+
+        .map-modal-content {
+            max-width: 900px;
+            width: 95%;
+            padding: 0;
+            overflow: hidden;
+        }
+
+        .map-header {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+        }
+
+        .map-header h3 {
+            color: var(--white);
+            margin: 0;
+            font-size: 1.5rem;
+        }
+
+        .close-map {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .close-map:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .map-container {
+            width: 100%;
+            height: 500px;
+            position: relative;
+        }
+
+        #embeddedGoogleMap {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .map-loading {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--gray-light);
+            z-index: 1;
+        }
+
+        .map-loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid var(--gray-medium);
+            border-top-color: var(--natural-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 15px;
+        }
+
+        .map-details {
+            padding: 25px 30px;
+            background-color: var(--gray-light);
+            border-top: 1px solid var(--gray-medium);
+        }
+
+        .map-details h4 {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--navy);
+        }
+
+        .map-address {
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .address-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .address-item h5 {
+            font-size: 1rem;
+            color: var(--navy);
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        .address-item p {
+            color: var(--gray-dark);
+            margin-bottom: 5px;
+        }
+
+        .map-actions {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .map-action-btn {
+            background-color: var(--navy);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 6px;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+
+        .map-action-btn:hover {
+            background-color: var(--navy-light);
+            transform: translateY(-2px);
+        }
+
+        .map-action-btn.get-directions {
+            background-color: var(--natural-blue);
+        }
+
+        .map-action-btn.get-directions:hover {
+            background-color: #3a5a8c;
+        }
+
+        /* Notification Panel */
+        .notification-panel {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 350px;
+            background-color: var(--white);
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 1002;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-20px);
+            transition: var(--transition);
+            border-left: 4px solid var(--natural-blue);
+        }
+
+        .notification-panel.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .notification-header {
+            background-color: var(--navy);
+            color: var(--white);
+            padding: 15px 20px;
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .notification-header h4 {
+            color: var(--white);
+            font-size: 1.1rem;
+            margin: 0;
+        }
+
+        .close-notification {
+            background: none;
+            border: none;
+            color: var(--white);
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .notification-body {
+            padding: 20px;
+        }
+
+        .notification-item {
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--gray-light);
+        }
+
+        .notification-item:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+
+        .notification-label {
+            font-weight: 600;
+            color: var(--navy);
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .notification-value {
+            color: var(--black);
+        }
+
+        /* Form Status Messages */
+        .form-status {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .form-status.success {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 4px solid var(--success-green);
+            display: block;
+        }
+
+        .form-status.error {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 4px solid var(--error-red);
+            display: block;
+        }
+
+        .form-status p {
+            margin: 0;
+            color: var(--black);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .hero-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+            
+            .floating-shapes {
+                height: 300px;
+            }
+            
+            .footer-content {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 30px;
+            }
+            
+            .map-container {
+                height: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--white);
+                flex-direction: column;
+                padding: 20px;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+                gap: 15px;
+            }
+            
+            .nav-links a {
+                color: var(--navy);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero {
+                padding: 60px 0 30px;
+            }
+            
+            .hero-text h1 {
+                font-size: 2.2rem;
+            }
+            
+            .contact-form,
+            .info-card {
+                padding: 30px 20px;
+            }
+            
+            .footer-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+            
+            .notification-panel {
+                width: 90%;
+                left: 50%;
+                transform: translateX(-50%) translateY(-20px);
+            }
+            
+            .notification-panel.visible {
+                transform: translateX(-50%) translateY(0);
+            }
+            
+            .map-container {
+                height: 350px;
+            }
+            
+            .map-modal-content {
+                width: 98%;
+                padding: 0;
+            }
+            
+            .map-address {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .map-actions {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-text h1 {
+                font-size: 1.8rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+            
+            .info-card {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .info-icon {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+            
+            .map-container {
+                height: 300px;
+            }
+            
+            .map-header {
+                padding: 15px 20px;
+            }
+            
+            .map-header h3 {
+                font-size: 1.3rem;
+            }
+            
+            .map-details {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">
+                    <i class="fas fa-palette"></i>
+                    Johnson
+                </a>
+                
+                <button class="mobile-menu-btn" id="mobileMenuBtn">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <ul class="nav-links" id="navLinks">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="index.html">Benefits</a></li>
+                    <li><a href="index.html">Services</a></li>
+                    <li><a href="contact.html" class="navy-text">Contact</a></li>
+                    <li><a href="gallery.html">Explore</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <h1>Let's Create <span>Something Amazing</span> Together</h1>
+                    <p>Your vision deserves exceptional design. Reach out to our team of creative experts and let's transform your ideas into visual masterpieces that captivate and inspire.</p>
+                </div>
+                <div class="hero-visual">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get In Touch</h2>
+                <p>Have a project in mind? Fill out the form below and we'll get back to you within 24 hours.</p>
+            </div>
+            
+            <div class="contact-container">
+                <!-- Contact Form -->
+                <div class="contact-form">
+                    <form id="contactForm">
+                        <div class="form-group">
+                            <label for="name" class="navy-text">Full Name *</label>
+                            <div class="input-icon">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <input type="text" id="name" name="name" placeholder="Your name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email" class="navy-text">Email Address *</label>
+                            <div class="input-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone" class="navy-text">Phone Number</label>
+                            <div class="input-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <input type="tel" id="phone" name="phone" placeholder="Enter your contact">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="projectType" class="navy-text">Project Type *</label>
+                            <div class="input-icon">
+                                <i class="fas fa-briefcase"></i>
+                            </div>
+                            <select id="projectType" name="projectType" required>
+                                <option value="" disabled selected>Select a project type</option>
+                                <option value="branding">Branding & Identity</option>
+                            
+                                <option value="print">Print Design</option>
+                                <option value="illustration">Illustration</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message" class="navy-text">Your Message *</label>
+                            <div class="input-icon">
+                                <i class="fas fa-comment-dots"></i>
+                            </div>
+                            <textarea id="message" name="message" placeholder="Tell us about your project, timeline, and budget..." required></textarea>
+                        </div>
+                        
+                        <!-- Form Status Messages -->
+                        <div id="formStatus" class="form-status"></div>
+                        
+                        <button type="submit" class="submit-btn" id="submitBtn">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="contact-info">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-envelope-open-text"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3 class="navy-text">Email Us</h3>
+                            <p>johnson@gmail.com</p>
+                            <button class="copy-btn" data-text="hello@visionarydesign.co">
+                                <i class="far fa-copy"></i> Copy Email
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3 class="navy-text">Call Us</h3>
+                            <p>0717 293 345</p>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="info-card map-card" id="mapCard">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3 class="navy-text">Visit Our Studio</h3>
+                            <p>Nairobi, Kenya</p>
+                            
+                            <div class="map-preview">
+                                <!-- Preview image for Nairobi, Kenya -->
+                                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Nairobi Map Preview" class="map-preview-image">
+                                <div class="map-overlay">
+                                    <i class="fas fa-map-marked-alt"></i> Click to View Location
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-hashtag"></i>
+                        </div>
+                        <div class="info-content">
+                            <h3 class="navy-text">Follow Us</h3>
+                            <p>Stay connected for design inspiration</p>
+                            <div class="social-links">
+                                <a href="#" class="social-link" aria-label="Instagram">
+                                    <i class="fab fa-instagram"></i>
+                                </a>
+                                
+                                <a href="#" class="social-link" aria-label="LinkedIn">
+                                    <i class="fab fa-linkedin-in"></i>
+                                </a>
+                                <a href="#" class="social-link" aria-label="Behance">
+                                    <i class="fab fa-behance"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Map Info Note -->
+            <div style="text-align: center; margin-top: 40px; color: var(--gray-dark);">
+                <p><i class="fas fa-map-marker-alt" style="color: var(--natural-blue);"></i> </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find quick answers to common questions about working with our design team.</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item" id="faq1">
+                    <div class="faq-question">
+                        <h3 class="navy-text">What's your typical design process?</h3>
+                        <div class="faq-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our process begins with a discovery call to understand your vision, followed by research, concept development, design execution, and iterative refinements. We maintain transparent communication throughout to ensure the final product exceeds expectations.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" id="faq2">
+                    <div class="faq-question">
+                        <h3 class="navy-text">How long does a typical project take?</h3>
+                        <div class="faq-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Timeline varies based on project scope. A brand identity might take 4-6 weeks, while a comprehensive website design could take 8-12 weeks. We provide detailed timelines during our initial consultation and work diligently to meet agreed-upon deadlines.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" id="faq3">
+                    <div class="faq-question">
+                        <h3 class="navy-text">What are your pricing structures?</h3>
+                        <div class="faq-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer both fixed-price packages for common projects and custom quotes for unique needs. Our pricing is transparent with no hidden fees. We'll provide a detailed proposal after understanding your project requirements and budget.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item" id="faq4">
+                    <div class="faq-question">
+                        <h3 class="navy-text">Do you offer ongoing design support?</h3>
+                        <div class="faq-icon">
+                            <i class="fas fa-plus"></i>
+                        </div>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! We offer retainer packages for clients who need continuous design support. These can include a set number of hours per month, priority access to our team, and discounted rates for ongoing work.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <a href="#" class="footer-logo">
+                        VisionaryDesign
+                    </a>
+                    <p>Transforming visions into remarkable visual experiences. We are a creative design agency specializing in branding, web design, and visual communication.</p>
+                    <div class="footer-social-links">
+                        <a href="#" class="footer-social-link" aria-label="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="footer-social-link" aria-label="Dribbble">
+                            <i class="fab fa-dribbble"></i>
+                        </a>
+                        <a href="#" class="footer-social-link" aria-label="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="footer-social-link" aria-label="Behance">
+                            <i class="fab fa-behance"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#">Our Services</a></li>
+                        <li><a href="#">Portfolio</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><a href="mailto:johnson@gmail.com">johnson@gmail.com</a></li>
+                        <li><a href="tel:+254717293345">0717 293 345</a></li>
+                        <li>Nairobi, Kenya</li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2025 Johnson Kamau. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-chevron-up"></i>
+    </a>
+
+    <!-- Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="modal-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h3 class="navy-text">Message Sent Successfully!</h3>
+            <p>Thank you for contacting us. We've received your message and will respond within 24 hours.</p>
+            <button class="close-modal" id="closeModal">Got It!</button>
+        </div>
+    </div>
+
+    <!-- Google Maps Modal -->
+    <div class="modal map-modal" id="mapModal">
+        <div class="map-modal-content">
+            <div class="map-header">
+                <h3>Our Studio Location - Nairobi, Kenya</h3>
+                <button class="close-map" id="closeMap">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="map-container">
+                <div class="map-loading" id="mapLoading">
+                    <div class="map-loading-spinner"></div>
+                    <p>Loading Google Maps...</p>
+                </div>
+                <!-- Embedded Google Map with your location -->
+                <iframe 
+                    id="embeddedGoogleMap"
+                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3989.74234510942!2d36.8716299!3d-1.2871268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1704800000000!5m2!1sen!2ske"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen=""
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    title="Visionary Design Studio Location in Nairobi, Kenya">
+                </iframe>
+            </div>
+            <div class="map-details">
+                <h4>Johnson Kamau Design Studio - Nairobi</h4>
+                <div class="map-address">
+                    <div class="address-item">
+                        <h5>Location</h5>
+                        <p>Nairobi, Kenya</p>
+                       
+                    </div>
+                    <div class="address-item">
+                        <h5>Contact</h5>
+                        <p>Email: johnson@gmail.com</p>
+                        <p>Phone: +254 717 892 776</p>
+                        <p>WhatsApp: +254 717 892 776</p>
+                    </div>
+                    
+                </div>
+                <div class="map-actions">
+                    <a href="https://www.google.com/maps/dir//-1.2871268,36.8716299" target="_blank" class="map-action-btn get-directions">
+                        <i class="fas fa-directions"></i> Get Directions
+                    </a>
+                    <button class="map-action-btn" id="copyAddressBtn">
+                        <i class="far fa-copy"></i> Copy Coordinates
+                    </button>
+                    <a href="tel:+254717 293 345" class="map-action-btn">
+                        <i class="fas fa-phone"></i> Call Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Notification Panel -->
+    <div class="notification-panel" id="notificationPanel">
+        <div class="notification-header">
+            <h4>New Contact Form Submission</h4>
+            <button class="close-notification" id="closeNotification">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        <div class="notification-body">
+            <div class="notification-item">
+                <span class="notification-label">Project Type:</span>
+                <span class="notification-value" id="notificationProjectType">Not specified</span>
+            </div>
+            <div class="notification-item">
+                <span class="notification-label">From:</span>
+                <span class="notification-value" id="notificationName">Not specified</span>
+            </div>
+            <div class="notification-item">
+                <span class="notification-label">Email:</span>
+                <span class="notification-value" id="notificationEmail">Not specified</span>
+            </div>
+            <div class="notification-item">
+                <span class="notification-label">Message Preview:</span>
+                <span class="notification-value" id="notificationMessage">Not specified</span>
+            </div>
+            <div class="notification-item">
+                <span class="notification-label">Time:</span>
+                <span class="notification-value" id="notificationTime">Just now</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Your Google Maps location (Nairobi, Kenya)
+        const yourLocation = {
+            lat: -1.2871268,
+            lng: 36.8716299,
+            zoom: 17,
+            address: "Nairobi, Kenya",
+            embedUrl: "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3989.74234510942!2d36.8716299!3d-1.2871268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1704800000000!5m2!1sen!2ske"
+        };
+        
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
+                ? '<i class="fas fa-times"></i>' 
+                : '<i class="fas fa-bars"></i>';
+        });
+        
+        // FAQ Accordion
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const icon = item.querySelector('.faq-icon i');
+            
+            question.addEventListener('click', () => {
+                // Close all other FAQ items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                        otherItem.querySelector('.faq-icon i').className = 'fas fa-plus';
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+                
+                // Change icon
+                if (item.classList.contains('active')) {
+                    icon.className = 'fas fa-times';
+                } else {
+                    icon.className = 'fas fa-plus';
+                }
+            });
+        });
+        
+        // Open Google Maps Modal
+        const mapCard = document.getElementById('mapCard');
+        const mapModal = document.getElementById('mapModal');
+        const closeMap = document.getElementById('closeMap');
+        
+        mapCard.addEventListener('click', () => {
+            mapModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            
+            // Hide loading after map loads
+            const mapLoading = document.getElementById('mapLoading');
+            const mapIframe = document.getElementById('embeddedGoogleMap');
+            
+            mapIframe.onload = function() {
+                setTimeout(() => {
+                    mapLoading.style.display = 'none';
+                }, 500);
+            };
+            
+            // Ensure map is loaded
+            if (mapIframe.src) {
+                setTimeout(() => {
+                    mapLoading.style.display = 'none';
+                }, 1000);
+            }
+        });
+        
+        // Close map modal
+        closeMap.addEventListener('click', () => {
+            mapModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close map modal when clicking outside
+        mapModal.addEventListener('click', (e) => {
+            if (e.target === mapModal) {
+                mapModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Copy coordinates functionality
+        const copyAddressBtn = document.getElementById('copyAddressBtn');
+        copyAddressBtn.addEventListener('click', () => {
+            const coordinates = `${yourLocation.lat}, ${yourLocation.lng}`;
+            
+            if (navigator.clipboard) {
+                navigator.clipboard.writeText(coordinates).then(() => {
+                    const originalHTML = copyAddressBtn.innerHTML;
+                    copyAddressBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    
+                    setTimeout(() => {
+                        copyAddressBtn.innerHTML = originalHTML;
+                    }, 2000);
+                });
+            } else {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = coordinates;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                
+                const originalHTML = copyAddressBtn.innerHTML;
+                copyAddressBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                
+                setTimeout(() => {
+                    copyAddressBtn.innerHTML = originalHTML;
+                }, 2000);
+            }
+        });
+        
+        // Form Submission
+        const contactForm = document.getElementById('contactForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const successModal = document.getElementById('successModal');
+        const closeModal = document.getElementById('closeModal');
+        const notificationPanel = document.getElementById('notificationPanel');
+        const closeNotification = document.getElementById('closeNotification');
+        const formStatus = document.getElementById('formStatus');
+        
+        // Function to show form status message
+        function showFormStatus(message, type) {
+            formStatus.textContent = message;
+            formStatus.className = `form-status ${type}`;
+            
+            // Hide after 5 seconds if it's a success message
+            if (type === 'success') {
+                setTimeout(() => {
+                    formStatus.style.display = 'none';
+                }, 5000);
+            }
+        }
+        
+        // Function to show notification with form data
+        function showFormNotification(formData) {
+            // Get current time
+            const now = new Date();
+            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
+            
+            // Update notification content
+            document.getElementById('notificationProjectType').textContent = 
+                formData.projectType || 'Not specified';
+            document.getElementById('notificationName').textContent = 
+                formData.name || 'Not specified';
+            document.getElementById('notificationEmail').textContent = 
+                formData.email || 'Not specified';
+            
+            // Truncate message if too long
+            const message = formData.message || 'Not specified';
+            const truncatedMessage = message.length > 50 ? message.substring(0, 50) + '...' : message;
+            document.getElementById('notificationMessage').textContent = truncatedMessage;
+            
+            document.getElementById('notificationTime').textContent = timeString;
+            
+            // Show notification
+            notificationPanel.classList.add('visible');
+            
+            // Auto-hide notification after 10 seconds
+            setTimeout(() => {
+                notificationPanel.classList.remove('visible');
+            }, 10000);
+        }
+        
+        // Main form submission handler
+        contactForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // Simple form validation
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            const projectType = document.getElementById('projectType').value;
+            
+            if (name === '' || email === '' || message === '' || projectType === '') {
+                showFormStatus('Please fill in all required fields.', 'error');
+                return;
+            }
+            
+            // Collect form data
+            const formData = {
+                name: name,
+                email: email,
+                phone: document.getElementById('phone').value.trim(),
+                projectType: document.getElementById('projectType').selectedOptions[0].text,
+                message: message
+            };
+            
+            // Show loading state
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            // Simulate form submission (in a real app, you would send to a server)
+            setTimeout(() => {
+                // Show notification with form data
+                showFormNotification(formData);
+                
+                // Show success message
+                showFormStatus('Your message has been sent successfully! We will respond within 24 hours.', 'success');
+                
+                // Reset form
+                contactForm.reset();
+                
+                // Show success modal after a delay
+                setTimeout(() => {
+                    successModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }, 1000);
+                
+                // Log to console (for demonstration)
+                console.log('=== FORM SUBMISSION DETAILS ===');
+                console.log('Name:', formData.name);
+                console.log('Email:', formData.email);
+                console.log('Phone:', formData.phone);
+                console.log('Project Type:', formData.projectType);
+                console.log('Message:', formData.message);
+                console.log('Location:', yourLocation.address);
+                console.log('===============================');
+                
+                // Reset button state
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
+            }, 1500);
+        });
+        
+        // Close modal
+        closeModal.addEventListener('click', () => {
+            successModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close modal when clicking outside
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                successModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Close notification
+        closeNotification.addEventListener('click', () => {
+            notificationPanel.classList.remove('visible');
+        });
+        
+        // Copy Email Functionality
+        const copyButtons = document.querySelectorAll('.copy-btn');
+        
+        copyButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                const textToCopy = button.getAttribute('data-text');
+                
+                // Use Clipboard API if available
+                if (navigator.clipboard) {
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalHTML = button.innerHTML;
+                        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                        
+                        setTimeout(() => {
+                            button.innerHTML = originalHTML;
+                        }, 2000);
+                    });
+                } else {
+                    // Fallback for older browsers
+                    const textArea = document.createElement('textarea');
+                    textArea.value = textToCopy;
+                    document.body.appendChild(textArea);
+                    textArea.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    const originalHTML = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-check"></i> Copied!';
+                    
+                    setTimeout(() => {
+                        button.innerHTML = originalHTML;
+                    }, 2000);
+                }
+            });
+        });
+        
+        // Back to Top Button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        });
+        
+        backToTop.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe elements for animation
+        const animatedElements = document.querySelectorAll('.contact-form, .info-card, .faq-item');
+        animatedElements.forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(el);
+        });
+        
+        // Initialize map with your location
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Google Maps loaded with your location:');
+            console.log('Latitude:', yourLocation.lat);
+            console.log('Longitude:', yourLocation.lng);
+            console.log('Embed URL:', yourLocation.embedUrl);
+        });
+    </script>
+</body>
+</html>
