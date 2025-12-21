@@ -746,6 +746,7 @@
             transform: rotate(90deg);
         }
 
+        /* Enhanced Lightbox Navigation - Hide by default, show on hover/touch */
         .lightbox-nav {
             position: absolute;
             top: 50%;
@@ -756,6 +757,13 @@
             transform: translateY(-50%);
             pointer-events: none;
             z-index: 1001;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        /* Show nav on lightbox hover (desktop) */
+        .lightbox:hover .lightbox-nav {
+            opacity: 1;
         }
 
         .lightbox-prev,
@@ -779,12 +787,22 @@
             animation: fadeIn 0.5s ease 0.3s both;
             min-height: 44px;
             min-width: 44px;
+            /* Ensure buttons are visible when shown */
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        /* Show buttons on lightbox hover */
+        .lightbox:hover .lightbox-prev,
+        .lightbox:hover .lightbox-next {
+            opacity: 0.95;
+            transform: scale(1);
         }
 
         .lightbox-prev:hover,
         .lightbox-next:hover {
             background: rgba(0, 0, 0, 0.95);
-            transform: scale(1.15);
+            transform: scale(1.15) !important;
             border-color: rgba(255, 255, 255, 0.5);
             box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
             opacity: 1;
@@ -792,7 +810,7 @@
 
         .lightbox-prev:active,
         .lightbox-next:active {
-            transform: scale(1.05);
+            transform: scale(1.05) !important;
         }
 
         .lightbox-counter {
@@ -1170,6 +1188,9 @@
                 height: 44px;
                 font-size: 1.5rem;
                 padding: 0 0.5rem;
+                /* Mobile-specific styles - show buttons on touch */
+                opacity: 0.7; /* Visible but subtle on mobile */
+                transform: scale(1);
             }
             
             .lightbox-counter {
@@ -1217,6 +1238,25 @@
             .overlay-meta {
                 opacity: 1;
                 transform: translateY(0);
+            }
+            
+            /* Show buttons when lightbox is active on mobile */
+            .lightbox.active .lightbox-prev,
+            .lightbox.active .lightbox-next {
+                opacity: 0.7;
+                transform: scale(1);
+            }
+            
+            /* Make buttons more visible when actively touching */
+            .lightbox-prev:active,
+            .lightbox-next:active {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+            
+            /* Mobile nav always visible */
+            .lightbox-nav {
+                opacity: 1; /* Always show on mobile */
             }
         }
 
@@ -1290,6 +1330,14 @@
             .lightbox-meta {
                 font-size: 0.875rem;
             }
+            
+            .lightbox-prev,
+            .lightbox-next {
+                width: 44px;
+                height: 44px;
+                font-size: 1.3rem;
+                opacity: 0.8; /* Slightly more visible on small screens */
+            }
         }
 
         /* Landscape orientation for phones */
@@ -1335,6 +1383,11 @@
             
             .lightbox-info-panel {
                 max-height: 70vh;
+            }
+            
+            .lightbox-prev,
+            .lightbox-next {
+                opacity: 0.8;
             }
         }
 
@@ -1527,6 +1580,15 @@
             outline-offset: 2px;
         }
 
+        /* Ensure buttons are visible when focused (accessibility) */
+        .lightbox-prev:focus-visible,
+        .lightbox-next:focus-visible {
+            opacity: 1 !important;
+            transform: scale(1.1) !important;
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
         .footer-link a:focus-visible,
         .social-link:focus-visible {
             outline: 2px solid var(--color-text-accent);
@@ -1671,6 +1733,33 @@
                 transform: translateZ(0);
                 backface-visibility: hidden;
             }
+        }
+
+        /* Add touch feedback for mobile */
+        .lightbox-prev.touch-active,
+        .lightbox-next.touch-active {
+            opacity: 1 !important;
+            transform: scale(1.1) !important;
+            background: rgba(0, 0, 0, 0.95);
+        }
+
+        /* Remove animation delay for buttons on mobile to appear instantly */
+        @media (max-width: 768px) {
+            .lightbox-prev,
+            .lightbox-next {
+                animation: fadeIn 0.3s ease both;
+            }
+        }
+
+        /* Add a class to show nav buttons programmatically */
+        .lightbox-nav.visible {
+            opacity: 1;
+        }
+
+        .lightbox-nav.visible .lightbox-prev,
+        .lightbox-nav.visible .lightbox-next {
+            opacity: 0.95;
+            transform: scale(1);
         }
     </style>
 </head>
@@ -2068,6 +2157,15 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Touch detection and button visibility control
+            let isTouchDevice = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+            let navButtonsVisible = false;
+            let hideButtonsTimeout;
+            let touchStartTime = 0;
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let isSwiping = false;
+
             // Image quality optimization
             const optimizeImageQuality = () => {
                 const images = document.querySelectorAll('.card-image, .lightbox-image');
@@ -2106,6 +2204,7 @@
             const lightboxCounter = document.querySelector('.lightbox-counter');
             const lightboxToggleInfo = document.querySelector('.lightbox-toggle-info');
             const lightboxInfoPanel = document.querySelector('.lightbox-info-panel');
+            const lightboxNav = document.querySelector('.lightbox-nav');
             
             let currentArtwork = null;
             let currentImageIndex = 0;
@@ -2134,6 +2233,34 @@
             
             // Initialize image preloading
             preloadImages();
+            
+            // Function to show navigation buttons
+            function showNavButtons() {
+                if (!isTouchDevice) return; // Only auto-show on touch devices
+                
+                lightboxNav.classList.add('visible');
+                lightboxPrev.classList.add('touch-active');
+                lightboxNext.classList.add('touch-active');
+                navButtonsVisible = true;
+                
+                // Clear any existing timeout
+                clearTimeout(hideButtonsTimeout);
+                
+                // Hide buttons after 2 seconds of inactivity
+                hideButtonsTimeout = setTimeout(() => {
+                    hideNavButtons();
+                }, 2000);
+            }
+
+            // Function to hide navigation buttons
+            function hideNavButtons() {
+                if (!isTouchDevice) return;
+                
+                lightboxNav.classList.remove('visible');
+                lightboxPrev.classList.remove('touch-active');
+                lightboxNext.classList.remove('touch-active');
+                navButtonsVisible = false;
+            }
             
             // Tab switching
             tabs.forEach(tab => {
@@ -2230,6 +2357,11 @@
                     document.body.classList.add('lightbox-open');
                     lightboxClose.focus();
                     
+                    // Show nav buttons on mobile when lightbox opens
+                    if (isTouchDevice) {
+                        setTimeout(showNavButtons, 300);
+                    }
+                    
                     // Optimize lightbox image quality
                     setTimeout(optimizeImageQuality, 100);
                     
@@ -2264,6 +2396,8 @@
             function closeLightbox() {
                 lightbox.classList.remove('active');
                 document.body.classList.remove('lightbox-open');
+                clearTimeout(hideButtonsTimeout); // Clear the hide timeout
+                hideNavButtons(); // Hide buttons
             }
             
             function navigateLightbox(direction) {
@@ -2313,6 +2447,67 @@
             }
             
             // Touch events
+            lightbox.addEventListener('touchstart', (e) => {
+                if (!isTouchDevice) return;
+                
+                touchStartTime = Date.now();
+                touchStartX = e.touches[0].clientX;
+                touchStartY = e.touches[0].clientY;
+                isSwiping = false;
+                
+                // Show buttons on touch start
+                showNavButtons();
+                
+                // Add active state to buttons if touched directly
+                const touchX = e.touches[0].clientX;
+                const touchY = e.touches[0].clientY;
+                
+                // Check if touch is on navigation buttons
+                const prevRect = lightboxPrev.getBoundingClientRect();
+                if (touchX >= prevRect.left && touchX <= prevRect.right &&
+                    touchY >= prevRect.top && touchY <= prevRect.bottom) {
+                    lightboxPrev.classList.add('touch-active');
+                }
+                
+                const nextRect = lightboxNext.getBoundingClientRect();
+                if (touchX >= nextRect.left && touchX <= nextRect.right &&
+                    touchY >= nextRect.top && touchY <= nextRect.bottom) {
+                    lightboxNext.classList.add('touch-active');
+                }
+            }, { passive: true });
+
+            lightbox.addEventListener('touchmove', (e) => {
+                if (!isTouchDevice) return;
+                
+                const touchX = e.touches[0].clientX;
+                const deltaX = Math.abs(touchX - touchStartX);
+                const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+                
+                // Detect if user is swiping (horizontal movement > vertical)
+                if (deltaX > 10 && deltaX > deltaY) {
+                    isSwiping = true;
+                }
+            }, { passive: true });
+
+            lightbox.addEventListener('touchend', (e) => {
+                if (!isTouchDevice) return;
+                
+                const touchEndTime = Date.now();
+                const touchDuration = touchEndTime - touchStartTime;
+                
+                // If it was a quick tap (not a swipe), keep buttons visible
+                if (!isSwiping && touchDuration < 300) {
+                    showNavButtons();
+                }
+                
+                // Remove active state from buttons
+                lightboxPrev.classList.remove('touch-active');
+                lightboxNext.classList.remove('touch-active');
+                
+                isSwiping = false;
+            }, { passive: true });
+            
+            // Enhanced touch events for swipe
             lightboxImage.addEventListener('touchstart', (e) => {
                 touchStartX = e.changedTouches[0].screenX;
             }, { passive: true });
@@ -2332,8 +2527,69 @@
                     } else {
                         navigateLightbox('prev');
                     }
+                    
+                    // Show buttons after swipe on mobile
+                    if (isTouchDevice) {
+                        showNavButtons();
+                    }
                 }
             }
+            
+            // Show buttons when clicking/tapping on lightbox content
+            lightboxImage.addEventListener('click', () => {
+                if (isTouchDevice) {
+                    showNavButtons();
+                }
+            });
+
+            // Hide buttons when clicking outside buttons on mobile
+            lightbox.addEventListener('click', (e) => {
+                if (!isTouchDevice) return;
+                
+                const target = e.target;
+                const isNavButton = target.closest('.lightbox-prev') || 
+                                   target.closest('.lightbox-next') ||
+                                   target.closest('.lightbox-close') ||
+                                   target.closest('.lightbox-toggle-info');
+                
+                if (!isNavButton) {
+                    showNavButtons(); // Show buttons when tapping anywhere in lightbox
+                }
+            });
+            
+            // Add mousemove listener for desktop hover effect
+            lightbox.addEventListener('mousemove', (e) => {
+                if (isTouchDevice) return; // Don't interfere with touch devices
+                
+                // Show nav on mouse movement
+                lightboxNav.style.opacity = '1';
+                lightboxPrev.style.opacity = '0.95';
+                lightboxNext.style.opacity = '0.95';
+            });
+
+            // Hide nav when mouse leaves lightbox (desktop only)
+            if (!isTouchDevice) {
+                lightbox.addEventListener('mouseleave', () => {
+                    lightboxNav.style.opacity = '0';
+                    lightboxPrev.style.opacity = '0';
+                    lightboxNext.style.opacity = '0';
+                });
+            }
+
+            // Keep buttons visible when hovering over them (desktop)
+            lightboxPrev.addEventListener('mouseenter', () => {
+                if (!isTouchDevice) {
+                    lightboxNav.style.opacity = '1';
+                    lightboxPrev.style.opacity = '1';
+                }
+            });
+            
+            lightboxNext.addEventListener('mouseenter', () => {
+                if (!isTouchDevice) {
+                    lightboxNav.style.opacity = '1';
+                    lightboxNext.style.opacity = '1';
+                }
+            });
             
             // Lightbox event listeners
             lightboxClose.addEventListener('click', closeLightbox);
