@@ -2,29 +2,34 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Johnson Kamau Mwangi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <title>Curated Exhibition | Digital Gallery</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --navy: #001f3f;
-            --navy-light: #0a2d56;
-            --navy-dark: #001122;
-            --white: #ffffff;
-            --black: #000000;
-            --natural-blue: #4a6fa5;
-            --natural-green: #6b8e6b;
-            --natural-clay: #c67b5f;
-            --gray-light: #f5f5f7;
-            --gray-medium: #e0e0e0;
-            --gray-dark: #8a8a8a;
-            --success-green: #2ecc71;
-            --error-red: #e74c3c;
-            --transition: all 0.3s ease;
-            --shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 15px 40px rgba(0, 0, 0, 0.12);
-            --border-radius: 12px;
+            --color-bg: #f9f7f4;
+            --color-surface: rgba(255, 255, 255, 0.95);
+            --color-border: rgba(255, 255, 255, 0.4);
+            --color-text-primary: #1a1a1a;
+            --color-text-secondary: #5a5a5a;
+            --color-text-accent: #8b7355;
+            --color-overlay: rgba(26, 26, 26, 0.75);
+            --shadow-subtle: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --shadow-elevated: 0 8px 32px rgba(0, 0, 0, 0.08);
+            --border-radius-sm: 4px;
+            --border-radius-md: 8px;
+            --border-radius-lg: 12px;
+            --spacing-xs: 0.5rem;
+            --spacing-sm: 1rem;
+            --spacing-md: 2rem;
+            --spacing-lg: 4rem;
+            --spacing-xl: 6rem;
+            --transition-smooth: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            --transition-gentle: all 0.6s ease;
+            --glass-blur: 12px;
         }
 
         * {
@@ -33,1876 +38,2377 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+            -webkit-text-size-adjust: 100%;
+        }
+
         body {
-            font-family: 'Poppins', sans-serif;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
             line-height: 1.6;
-            color: var(--black);
-            background-color: var(--white);
+            font-weight: 300;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            padding-top: 70px;
+            background: linear-gradient(135deg, #f9f7f4 0%, #ffffff 50%, #f5f2ed 100%);
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Prevent horizontal overflow */
+        body, .container, .nav-container, .footer-container {
+            max-width: 100vw;
             overflow-x: hidden;
         }
 
-        h1, h2, h3, h4 {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            line-height: 1.2;
-            color: var(--navy);
-        }
-
-        p, span, a, li, label, input, textarea, select, button {
-            color: var(--black);
-        }
-
-        .white-text {
-            color: var(--white) !important;
-        }
-
-        .navy-text {
-            color: var(--navy) !important;
-        }
-
-        .black-text {
-            color: var(--black) !important;
-        }
-
-        .container {
+        body.lightbox-open {
+            overflow: hidden;
+            position: fixed;
             width: 100%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
+            height: 100%;
+            touch-action: none;
         }
 
-        /* Header Styles */
-        header {
-            background-color: var(--white);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            position: sticky;
+        /* Enhanced Lightbox for Perfect Mobile Fit */
+        .lightbox {
+            position: fixed;
             top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            display: none;
+            justify-content: center;
+            align-items: center;
             z-index: 1000;
-            padding: 20px 0;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+            overscroll-behavior: contain;
         }
 
-        .header-content {
+        .lightbox.active {
+            display: flex;
+            opacity: 1;
+        }
+
+        .lightbox-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            animation: lightboxFadeIn 0.5s ease forwards;
+            touch-action: pan-y pinch-zoom;
+        }
+
+        @keyframes lightboxFadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .lightbox-image-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            background: #000;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        /* Enhanced lightbox image rendering for mobile */
+        .lightbox-image {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            object-position: center;
+            display: block;
+            transition: all 0.3s ease;
+            opacity: 1;
+            animation: lightboxImageAppear 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+            image-rendering: auto;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        @keyframes lightboxImageAppear {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        /* Enhanced Close Button - Always Visible on Mobile */
+        .lightbox-close {
+            position: absolute;
+            top: max(0.75rem, env(safe-area-inset-top));
+            right: max(0.75rem, env(safe-area-inset-right));
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(10px);
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease 0.2s both;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            font-weight: 300;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: rotate(90deg);
+        }
+
+        /* Enhanced Mobile Navigation Buttons */
+        .lightbox-nav {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 0.5rem;
+            transform: translateY(-50%);
+            pointer-events: none;
+            z-index: 1001;
+        }
+
+        .lightbox-prev,
+        .lightbox-next {
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.3rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(10px);
+            pointer-events: all;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            opacity: 0.9;
+            animation: fadeIn 0.5s ease 0.3s both;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
+
+        .lightbox-prev:hover,
+        .lightbox-next:hover {
+            background: rgba(0, 0, 0, 0.85);
+            transform: scale(1.1);
+            border-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.6);
+            opacity: 1;
+        }
+
+        /* Info Panel with Enhanced Mobile Fit */
+        .lightbox-info-panel {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.15);
+            padding: clamp(0.75rem, 3vw, var(--spacing-md));
+            color: white;
+            transform: translateY(0);
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            max-height: 50vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            z-index: 1001;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .lightbox-info-panel.hidden {
+            transform: translateY(100%);
+        }
+
+        /* Counter positioned to not interfere with close button */
+        .lightbox-counter {
+            position: absolute;
+            top: max(0.75rem, env(safe-area-inset-top));
+            left: max(0.75rem, env(safe-area-inset-left));
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            z-index: 1001;
+            animation: fadeIn 0.5s ease 0.2s both;
+            font-weight: 500;
+        }
+
+        /* Toggle Info Button positioned safely */
+        .lightbox-toggle-info {
+            position: absolute;
+            bottom: max(0.75rem, env(safe-area-inset-bottom));
+            right: max(0.75rem, env(safe-area-inset-right));
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(10px);
+            z-index: 1002;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: fadeIn 0.5s ease 0.3s both;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .lightbox-toggle-info:hover {
+            background: rgba(255, 255, 255, 0.25);
+        }
+
+        .lightbox-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.1rem, 4vw, 1.8rem);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            animation: fadeInUp 0.6s ease 0.1s both;
+            line-height: 1.2;
+        }
+
+        .lightbox-artist {
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+
+        .lightbox-meta {
+            font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 0.75rem;
+            animation: fadeInUp 0.6s ease 0.3s both;
+        }
+
+        .lightbox-description {
+            font-size: clamp(0.8rem, 2.5vw, 0.95rem);
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.85);
+            animation: fadeInUp 0.6s ease 0.4s both;
+            margin-bottom: 0.5rem;
+        }
+
+        .lightbox-details {
+            font-size: clamp(0.75rem, 2vw, 0.85rem);
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.4;
+            animation: fadeInUp 0.6s ease 0.5s both;
+        }
+
+        .swipe-hint {
+            position: absolute;
+            bottom: 4rem;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            opacity: 0;
+            animation: fadeInOut 3s ease-in-out 1s infinite;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 0.5rem 0.75rem;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        /* Mobile-Specific Enhancements */
+        @media (max-width: 768px) {
+            .lightbox-close {
+                top: max(0.5rem, env(safe-area-inset-top));
+                right: max(0.5rem, env(safe-area-inset-right));
+                width: 42px;
+                height: 42px;
+                font-size: 1.4rem;
+                background: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            }
+
+            .lightbox-counter {
+                top: max(0.5rem, env(safe-area-inset-top));
+                left: max(0.5rem, env(safe-area-inset-left));
+                font-size: 0.75rem;
+                padding: 0.2rem 0.6rem;
+            }
+
+            .lightbox-toggle-info {
+                bottom: max(0.5rem, env(safe-area-inset-bottom));
+                right: max(0.5rem, env(safe-area-inset-right));
+                width: 42px;
+                height: 42px;
+                font-size: 0.95rem;
+                background: rgba(255, 255, 255, 0.2);
+                box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+            }
+
+            .lightbox-prev,
+            .lightbox-next {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+                opacity: 0.95;
+            }
+
+            .lightbox-info-panel {
+                padding: 0.75rem;
+                max-height: 45vh;
+            }
+
+            .swipe-hint {
+                bottom: 3.5rem;
+                font-size: 0.7rem;
+                padding: 0.4rem 0.6rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .lightbox-close {
+                top: max(0.25rem, env(safe-area-inset-top));
+                right: max(0.25rem, env(safe-area-inset-right));
+                width: 40px;
+                height: 40px;
+                font-size: 1.3rem;
+            }
+
+            .lightbox-counter {
+                top: max(0.25rem, env(safe-area-inset-top));
+                left: max(0.25rem, env(safe-area-inset-left));
+                font-size: 0.7rem;
+                padding: 0.15rem 0.5rem;
+            }
+
+            .lightbox-toggle-info {
+                bottom: max(0.25rem, env(safe-area-inset-bottom));
+                right: max(0.25rem, env(safe-area-inset-right));
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+
+            .lightbox-prev,
+            .lightbox-next {
+                width: 38px;
+                height: 38px;
+                font-size: 1.1rem;
+            }
+
+            .lightbox-info-panel {
+                max-height: 40vh;
+                padding: 0.5rem;
+            }
+
+            .lightbox-title {
+                font-size: 1rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .lightbox-artist {
+                font-size: 0.85rem;
+                margin-bottom: 0.25rem;
+            }
+
+            .lightbox-meta {
+                font-size: 0.75rem;
+                margin-bottom: 0.5rem;
+            }
+
+            .lightbox-description {
+                font-size: 0.75rem;
+                line-height: 1.4;
+            }
+
+            .swipe-hint {
+                bottom: 3rem;
+                font-size: 0.65rem;
+                padding: 0.3rem 0.5rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .lightbox-close {
+                width: 36px;
+                height: 36px;
+                font-size: 1.2rem;
+            }
+
+            .lightbox-toggle-info {
+                width: 36px;
+                height: 36px;
+                font-size: 0.85rem;
+            }
+
+            .lightbox-prev,
+            .lightbox-next {
+                width: 34px;
+                height: 34px;
+                font-size: 1rem;
+            }
+
+            .lightbox-info-panel {
+                max-height: 38vh;
+            }
+        }
+
+        /* Landscape Mode Optimization */
+        @media (max-height: 500px) and (orientation: landscape) {
+            .lightbox-close {
+                top: 0.25rem;
+                right: 0.25rem;
+                width: 36px;
+                height: 36px;
+                font-size: 1.1rem;
+            }
+
+            .lightbox-counter {
+                top: 0.25rem;
+                left: 0.25rem;
+                font-size: 0.7rem;
+            }
+
+            .lightbox-toggle-info {
+                bottom: 0.25rem;
+                right: 0.25rem;
+                width: 36px;
+                height: 36px;
+                font-size: 0.85rem;
+            }
+
+            .lightbox-info-panel {
+                max-height: 60vh;
+                padding: 0.5rem;
+            }
+
+            .lightbox-title {
+                font-size: 0.9rem;
+            }
+
+            .lightbox-artist {
+                font-size: 0.8rem;
+            }
+
+            .swipe-hint {
+                display: none;
+            }
+        }
+
+        /* Prevent zoom on double-tap for better mobile experience */
+        .lightbox-image-container {
+            touch-action: pan-y pinch-zoom;
+        }
+
+        .lightbox-image {
+            -webkit-user-drag: none;
+            user-drag: none;
+        }
+
+        /* The rest of your existing CSS remains exactly the same */
+        /* Top Navigation Bar */
+        .top-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            z-index: 1000;
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.03);
+        }
+
+        .nav-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-md);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 1.8rem;
-            color: var(--navy);
-            text-decoration: none;
+        .back-home {
             display: flex;
             align-items: center;
-        }
-
-        .logo i {
-            margin-right: 8px;
-            font-size: 1.5rem;
-        }
-
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 30px;
-        }
-
-        .nav-links a {
+            gap: 0.75rem;
             text-decoration: none;
+            color: var(--color-text-primary);
+            font-weight: 400;
+            font-size: clamp(0.875rem, 2vw, 0.95rem);
+            transition: var(--transition-smooth);
+            padding: 0.5rem clamp(0.5rem, 2vw, 1rem);
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: var(--border-radius-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            white-space: nowrap;
+            min-height: 44px;
+        }
+
+        .back-home:hover {
+            color: var(--color-text-accent);
+            background: rgba(255, 255, 255, 0.9);
+            transform: translateX(-4px);
+        }
+
+        .back-home i {
+            font-size: 1.1rem;
+            transition: var(--transition-smooth);
+        }
+
+        .back-home:hover i {
+            transform: translateX(-2px);
+        }
+
+        .nav-logo {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
             font-weight: 500;
-            transition: var(--transition);
-            position: relative;
-            color: var(--navy);
-        }
-
-        .nav-links a:hover {
-            color: var(--natural-clay);
-        }
-
-        .nav-links a:after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -5px;
-            left: 0;
-            background-color: var(--natural-clay);
-            transition: var(--transition);
-        }
-
-        .nav-links a:hover:after {
-            width: 100%;
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            background: none;
-            border: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: var(--navy);
-        }
-
-        /* Hero Section */
-        .hero {
-            padding: 80px 0 40px;
-            background: linear-gradient(135deg, var(--white) 0%, #f9f9f9 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(74, 111, 165, 0.1) 0%, rgba(74, 111, 165, 0) 70%);
-            top: -100px;
-            right: -100px;
-            z-index: 0;
-        }
-
-        .hero-content {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
-            align-items: center;
-            position: relative;
-            z-index: 1;
-        }
-
-        .hero-text h1 {
-            font-size: 3.2rem;
-            margin-bottom: 20px;
-        }
-
-        .hero-text h1 span {
-            position: relative;
-            display: inline-block;
-        }
-
-        .hero-text h1 span::after {
-            content: '';
-            position: absolute;
-            width: 100%;
-            height: 8px;
-            background-color: rgba(74, 111, 165, 0.2);
-            bottom: 5px;
-            left: 0;
-            z-index: -1;
-        }
-
-        .hero-text p {
-            font-size: 1.2rem;
-            color: var(--gray-dark);
-            margin-bottom: 30px;
-        }
-
-        .hero-visual {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .floating-shapes {
-            position: relative;
-            width: 100%;
-            height: 400px;
-        }
-
-        .shape {
-            position: absolute;
-            border-radius: var(--border-radius);
-            opacity: 0.9;
-            transition: var(--transition);
-        }
-
-        .shape-1 {
-            width: 200px;
-            height: 200px;
-            background: linear-gradient(135deg, var(--natural-blue), #6b8e6b);
-            top: 0;
-            left: 0;
-            animation: float 6s ease-in-out infinite;
-        }
-
-        .shape-2 {
-            width: 150px;
-            height: 150px;
-            background: linear-gradient(135deg, var(--natural-green), #4a6fa5);
-            bottom: 0;
-            right: 0;
-            animation: float 8s ease-in-out infinite 1s;
-        }
-
-        .shape-3 {
-            width: 100px;
-            height: 100px;
-            background-color: var(--natural-clay);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation: rotate 20s linear infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-20px); }
-        }
-
-        @keyframes rotate {
-            0% { transform: translate(-50%, -50%) rotate(0deg); }
-            100% { transform: translate(-50%, -50%) rotate(360deg); }
-        }
-
-        /* Contact Form */
-        .contact-section {
-            padding: 80px 0;
-        }
-
-        .section-title {
+            color: var(--color-text-primary);
+            text-decoration: none;
+            letter-spacing: -0.01em;
             text-align: center;
-            margin-bottom: 50px;
+            flex: 1;
         }
 
-        .section-title h2 {
-            font-size: 2.5rem;
-            margin-bottom: 15px;
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
         }
 
-        .section-title p {
-            color: var(--gray-dark);
+        .nav-divider {
+            width: 1px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-contact {
+            font-size: clamp(0.8rem, 2vw, 0.875rem);
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            padding: 0.5rem clamp(0.5rem, 2vw, 1rem);
+            border-radius: var(--border-radius-sm);
+            border: 1px solid transparent;
+            white-space: nowrap;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-contact:hover {
+            color: var(--color-text-accent);
+            border-color: rgba(139, 115, 85, 0.2);
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 clamp(1rem, 4vw, var(--spacing-md));
+            width: 100%;
+        }
+
+        .gallery-header {
+            padding: clamp(var(--spacing-md), 5vw, var(--spacing-lg)) 0 clamp(var(--spacing-sm), 3vw, var(--spacing-md));
+            text-align: center;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: clamp(var(--spacing-md), 4vw, var(--spacing-lg));
+            animation: fadeInDown 0.8s ease-out;
+        }
+
+        .gallery-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--spacing-xs);
+            line-height: 1.1;
+            padding: 0 1rem;
+        }
+
+        .gallery-subtitle {
+            font-size: clamp(1rem, 3vw, 1.125rem);
+            color: var(--color-text-secondary);
             max-width: 600px;
             margin: 0 auto;
+            font-weight: 300;
+            padding: 0 1rem;
+            line-height: 1.6;
         }
 
-        .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+        .category-nav {
+            display: flex;
+            justify-content: center;
+            gap: clamp(0.5rem, 2vw, var(--spacing-md));
+            margin-bottom: clamp(var(--spacing-lg), 6vw, var(--spacing-xl));
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+            padding: 0 0.5rem;
         }
 
-        .contact-form {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            padding: 40px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .contact-form:hover {
-            box-shadow: var(--shadow-hover);
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-            position: relative;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
+        .category-tab {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(139, 115, 85, 0.15);
+            font-family: 'Inter', sans-serif;
+            font-size: clamp(0.8rem, 2vw, 0.95rem);
             font-weight: 500;
-        }
-
-        .form-group .input-icon {
-            position: absolute;
-            left: 15px;
-            top: 42px;
-            color: var(--gray-dark);
-        }
-
-        .form-group input,
-        .form-group select,
-        .form-group textarea {
-            width: 100%;
-            padding: 15px 15px 15px 45px;
-            border: 1px solid var(--gray-medium);
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 1rem;
-            transition: var(--transition);
-            background-color: var(--white);
-            color: var(--black);
-        }
-
-        .form-group textarea {
-            min-height: 150px;
-            resize: vertical;
-        }
-
-        .form-group input:focus,
-        .form-group select:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--natural-blue);
-            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
-        }
-
-        .submit-btn {
-            background-color: var(--navy);
-            color: white;
-            border: none;
-            padding: 16px 40px;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            font-size: 1.1rem;
+            color: var(--color-text-secondary);
+            padding: clamp(0.6rem, 2vw, 0.75rem) clamp(1rem, 3vw, 1.5rem);
             cursor: pointer;
-            transition: var(--transition);
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            border-radius: 50px;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transform: translateY(0);
+            overflow: hidden;
+            min-height: 44px;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            width: 100%;
-            margin-top: 10px;
-            position: relative;
         }
 
-        .submit-btn:hover {
-            background-color: var(--navy-light);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 31, 63, 0.3);
+        .category-tab:hover {
+            color: var(--color-text-primary);
+            background: rgba(255, 255, 255, 0.9);
+            border-color: rgba(139, 115, 85, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.15);
         }
 
-        .submit-btn:active {
+        .category-tab:active {
             transform: translateY(0);
+            box-shadow: 0 2px 10px rgba(139, 115, 85, 0.1);
         }
 
-        /* Contact Info Cards */
-        .contact-info {
-            display: flex;
-            flex-direction: column;
-            gap: 25px;
+        .category-tab.active {
+            color: white;
+            background: linear-gradient(135deg, #8b7355 0%, #a0886a 100%);
+            border-color: #8b7355;
+            font-weight: 600;
+            box-shadow: 0 6px 20px rgba(139, 115, 85, 0.3);
+            transform: translateY(-2px);
         }
 
-        .info-card {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            display: flex;
-            align-items: flex-start;
-            gap: 20px;
-        }
-
-        .info-card:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-hover);
-        }
-
-        .info-card.map-card {
-            cursor: pointer;
+        .gallery-container {
             position: relative;
-        }
-
-        .info-card.map-card:hover .info-icon {
-            background-color: rgba(74, 111, 165, 0.2);
-            transform: scale(1.1);
-        }
-
-        .map-preview {
-            margin-top: 15px;
-            border-radius: 8px;
-            overflow: hidden;
-            height: 0;
-            transition: height 0.3s ease;
-            position: relative;
-        }
-
-        .info-card.map-card:hover .map-preview {
-            height: 150px;
-        }
-
-        .map-preview-image {
+            min-height: 70vh;
             width: 100%;
-            height: 150px;
-            object-fit: cover;
-            opacity: 0.8;
-            transition: var(--transition);
         }
 
-        .info-card.map-card:hover .map-preview-image {
+        .category-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+
+        .category-section.active {
+            display: block;
             opacity: 1;
         }
 
-        .map-overlay {
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr));
+            gap: clamp(var(--spacing-sm), 3vw, var(--spacing-lg));
+            padding-bottom: clamp(var(--spacing-lg), 5vw, var(--spacing-xl));
+            width: 100%;
+        }
+
+        .art-card {
+            position: relative;
+            background: var(--color-surface);
+            backdrop-filter: blur(var(--glass-blur));
+            -webkit-backdrop-filter: blur(var(--glass-blur));
+            border-radius: var(--border-radius-lg);
+            border: 1px solid var(--color-border);
+            box-shadow: var(--shadow-subtle);
+            overflow: hidden;
+            transition: var(--transition-smooth);
+            aspect-ratio: 4/5;
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: cardAppear 0.8s cubic-bezier(0.215, 0.61, 0.355, 1) forwards;
+            width: 100%;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .category-section.active .art-card:nth-child(1) { animation-delay: 0.1s; }
+        .category-section.active .art-card:nth-child(2) { animation-delay: 0.2s; }
+        .category-section.active .art-card:nth-child(3) { animation-delay: 0.3s; }
+        .category-section.active .art-card:nth-child(4) { animation-delay: 0.4s; }
+        .category-section.active .art-card:nth-child(5) { animation-delay: 0.5s; }
+        .category-section.active .art-card:nth-child(6) { animation-delay: 0.6s; }
+        .category-section.active .art-card:nth-child(7) { animation-delay: 0.7s; }
+        .category-section.active .art-card:nth-child(8) { animation-delay: 0.8s; }
+        .category-section.active .art-card:nth-child(9) { animation-delay: 0.9s; }
+
+        @keyframes cardAppear {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .art-card:hover {
+            transform: translateY(-8px) scale(1.01);
+            box-shadow: var(--shadow-elevated);
+            border-color: rgba(255, 255, 255, 0.6);
+        }
+
+        .card-image-container {
+            flex: 1;
+            overflow: hidden;
+            position: relative;
+            cursor: zoom-in;
+            background: #ffffff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .card-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center;
+            transition: var(--transition-gentle);
+            will-change: transform;
+            backface-visibility: hidden;
+            image-rendering: auto;
+            -webkit-font-smoothing: antialiased;
+            opacity: 0;
+            transform: scale(0.95);
+            animation: imageReveal 0.8s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+        }
+
+        .card-image,
+        .lightbox-image {
+            -webkit-filter: none !important;
+            filter: none !important;
+            -webkit-backface-visibility: visible !important;
+            backface-visibility: visible !important;
+        }
+
+        .art-card:nth-child(1) .card-image { animation-delay: 0.3s; }
+        .art-card:nth-child(2) .card-image { animation-delay: 0.4s; }
+        .art-card:nth-child(3) .card-image { animation-delay: 0.5s; }
+        .art-card:nth-child(4) .card-image { animation-delay: 0.6s; }
+        .art-card:nth-child(5) .card-image { animation-delay: 0.7s; }
+        .art-card:nth-child(6) .card-image { animation-delay: 0.8s; }
+        .art-card:nth-child(7) .card-image { animation-delay: 0.9s; }
+        .art-card:nth-child(8) .card-image { animation-delay: 1s; }
+        .art-card:nth-child(9) .card-image { animation-delay: 1.1s; }
+
+        @keyframes imageReveal {
+            0% {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.98);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .art-card:hover .card-image {
+            transform: scale(1.02);
+        }
+
+        .card-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 31, 63, 0.1);
+            background: linear-gradient(to top, var(--color-overlay), transparent 40%);
             display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-weight: 600;
-            font-size: 0.9rem;
+            flex-direction: column;
+            justify-content: flex-end;
+            padding: var(--spacing-md);
             opacity: 0;
-            transition: var(--transition);
+            transition: var(--transition-smooth);
+            color: white;
+            pointer-events: none;
         }
 
-        .info-card.map-card:hover .map-overlay {
+        .art-card:hover .card-overlay {
             opacity: 1;
         }
 
-        .info-icon {
-            width: 60px;
-            height: 60px;
+        .card-content {
+            padding: var(--spacing-md);
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(8px);
+            transform: translateY(20px);
+            opacity: 0;
+            animation: contentReveal 0.6s cubic-bezier(0.19, 1, 0.22, 1) forwards 0.4s;
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        @keyframes contentReveal {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .art-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.125rem, 3vw, 1.25rem);
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+        }
+
+        .artist-name {
+            font-size: clamp(0.85rem, 2vw, 0.9rem);
+            color: var(--color-text-secondary);
+            margin-bottom: 2px;
+            font-weight: 400;
+        }
+
+        .art-meta {
+            font-size: clamp(0.75rem, 2vw, 0.8rem);
+            color: var(--color-text-accent);
+            font-style: italic;
+        }
+
+        .overlay-title {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.25rem, 3vw, 1.5rem);
+            margin-bottom: var(--spacing-xs);
+            font-weight: 500;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform 0.5s ease 0.1s, opacity 0.5s ease 0.1s;
+        }
+
+        .overlay-artist {
+            font-size: clamp(0.9rem, 2vw, 1rem);
+            margin-bottom: 4px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: transform 0.5s ease 0.2s, opacity 0.5s ease 0.2s;
+        }
+
+        .overlay-meta {
+            font-size: clamp(0.8rem, 2vw, 0.875rem);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: transform 0.5s ease 0.3s, opacity 0.5s ease 0.3s;
+        }
+
+        .art-card:hover .overlay-title,
+        .art-card:hover .overlay-artist,
+        .art-card:hover .overlay-meta {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .multiple-images-indicator {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
             border-radius: 50%;
-            background-color: rgba(74, 111, 165, 0.1);
+            width: clamp(32px, 8vw, 36px);
+            height: clamp(32px, 8vw, 36px);
             display: flex;
             align-items: center;
             justify-content: center;
-            flex-shrink: 0;
-            color: var(--natural-blue);
-            font-size: 1.5rem;
-            transition: var(--transition);
+            color: var(--color-text-primary);
+            font-size: clamp(0.7rem, 2vw, 0.8rem);
+            font-weight: 500;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: var(--shadow-subtle);
+            pointer-events: none;
+            z-index: 2;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: indicatorPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 1s;
         }
 
-        .info-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 8px;
+        @keyframes indicatorPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            70% {
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
-        .info-content p {
-            color: var(--gray-dark);
-            margin-bottom: 5px;
+        .card-image-container::before {
+            display: none;
         }
 
-        .copy-btn {
-            background: none;
-            border: none;
-            color: var(--natural-blue);
-            font-size: 0.9rem;
-            cursor: pointer;
-            padding: 5px 0;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
 
-        .copy-btn:hover {
-            color: var(--navy);
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 15px;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: var(--gray-light);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--navy);
-            text-decoration: none;
-            transition: var(--transition);
+        .gallery-footer {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0, 0, 0, 0.08);
+            padding: clamp(var(--spacing-lg), 5vw, var(--spacing-xl)) 0;
+            animation: fadeIn 0.8s ease 0.5s both;
+            width: 100%;
         }
 
-        .social-link:hover {
-            background-color: var(--natural-blue);
-            color: white;
-            transform: translateY(-3px);
-        }
-
-        /* FAQ Section */
-        .faq-section {
-            padding: 80px 0;
-            background-color: var(--gray-light);
-        }
-
-        .faq-container {
-            max-width: 800px;
+        .footer-container {
+            max-width: 1440px;
             margin: 0 auto;
-        }
-
-        .faq-item {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            margin-bottom: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-        }
-
-        .faq-question {
-            padding: 25px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .faq-question h3 {
-            font-size: 1.2rem;
-        }
-
-        .faq-icon {
-            color: var(--natural-blue);
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .faq-answer {
-            padding: 0 30px;
-            max-height: 0;
-            overflow: hidden;
-            transition: var(--transition);
-            color: var(--gray-dark);
-        }
-
-        .faq-item.active .faq-question {
-            background-color: rgba(74, 111, 165, 0.05);
-        }
-
-        .faq-item.active .faq-icon {
-            transform: rotate(45deg);
-        }
-
-        .faq-item.active .faq-answer {
-            padding-bottom: 25px;
-            max-height: 300px;
-        }
-
-        /* Footer */
-        footer {
-            background-color: var(--navy);
-            color: var(--white);
-            padding: 60px 0 20px;
-        }
-
-        .footer-content {
+            padding: 0 clamp(1rem, 4vw, var(--spacing-md));
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            gap: 40px;
-            margin-bottom: 40px;
+            gap: clamp(var(--spacing-sm), 3vw, var(--spacing-lg));
         }
 
-        .footer-column h3 {
-            color: var(--white);
-            font-size: 1.3rem;
-            margin-bottom: 20px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
+        .footer-section {
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
         }
 
-        .footer-logo {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 900;
-            font-size: 1.8rem;
-            color: var(--white);
-            text-decoration: none;
-            display: block;
-            margin-bottom: 15px;
-        }
+        .footer-section:nth-child(1) { animation-delay: 0.6s; }
+        .footer-section:nth-child(2) { animation-delay: 0.7s; }
+        .footer-section:nth-child(3) { animation-delay: 0.8s; }
+        .footer-section:nth-child(4) { animation-delay: 0.9s; }
 
-        .footer-column p {
-            color: rgba(255, 255, 255, 0.8);
-            line-height: 1.6;
-            margin-bottom: 20px;
+        .footer-heading {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1.125rem, 3vw, 1.25rem);
+            font-weight: 500;
+            margin-bottom: var(--spacing-md);
+            color: var(--color-text-primary);
         }
 
         .footer-links {
             list-style: none;
         }
 
-        .footer-links li {
-            margin-bottom: 10px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.8);
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-block;
-        }
-
-        .footer-links a:hover {
-            color: var(--white);
-            transform: translateX(5px);
-        }
-
-        .footer-social-links {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-
-        .footer-social-link {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background-color: rgba(255, 255, 255, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-social-link:hover {
-            background-color: var(--natural-blue);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 0.9rem;
-        }
-
-        /* Back to Top Button */
-        .back-to-top {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background-color: var(--navy);
-            color: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-decoration: none;
-            font-size: 1.2rem;
-            box-shadow: 0 5px 15px rgba(0, 31, 63, 0.4);
-            transition: var(--transition);
+        .footer-link {
+            margin-bottom: var(--spacing-xs);
             opacity: 0;
-            visibility: hidden;
-            z-index: 999;
+            transform: translateX(-10px);
+            animation: slideInLeft 0.5s ease forwards;
         }
 
-        .back-to-top.visible {
-            opacity: 1;
-            visibility: visible;
+        .footer-link:nth-child(1) { animation-delay: 0.7s; }
+        .footer-link:nth-child(2) { animation-delay: 0.8s; }
+        .footer-link:nth-child(3) { animation-delay: 0.9s; }
+        .footer-link:nth-child(4) { animation-delay: 1s; }
+        .footer-link:nth-child(5) { animation-delay: 1.1s; }
+
+        @keyframes slideInLeft {
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
 
-        .back-to-top:hover {
-            background-color: var(--navy-light);
-            transform: translateY(-5px);
-        }
-
-        /* Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.7);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 1001;
-            opacity: 0;
-            visibility: hidden;
-            transition: var(--transition);
-        }
-
-        .modal.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .modal-content {
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            padding: 50px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
-            transform: translateY(30px);
-            transition: var(--transition);
-        }
-
-        .modal.active .modal-content {
-            transform: translateY(0);
-        }
-
-        .modal-icon {
-            font-size: 4rem;
-            color: var(--natural-blue);
-            margin-bottom: 20px;
-        }
-
-        .modal h3 {
-            font-size: 2rem;
-            margin-bottom: 15px;
-        }
-
-        .modal p {
-            color: var(--gray-dark);
-            margin-bottom: 30px;
-        }
-
-        .close-modal {
-            background-color: var(--navy);
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: 8px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .close-modal:hover {
-            background-color: var(--navy-light);
-        }
-
-        /* Google Maps Modal */
-        .map-modal {
-            z-index: 1002;
-        }
-
-        .map-modal-content {
-            max-width: 900px;
-            width: 95%;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        .map-header {
-            background-color: var(--navy);
-            color: var(--white);
-            padding: 20px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-        }
-
-        .map-header h3 {
-            color: var(--white);
-            margin: 0;
-            font-size: 1.5rem;
-        }
-
-        .close-map {
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.5rem;
-            cursor: pointer;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-
-        .close-map:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-        }
-
-        .map-container {
-            width: 100%;
-            height: 500px;
+        .footer-link a {
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            font-weight: 300;
             position: relative;
+            padding-left: 0;
+            display: inline-block;
+            font-size: clamp(0.85rem, 2vw, 1rem);
         }
 
-        #embeddedGoogleMap {
-            width: 100%;
-            height: 100%;
-            border: none;
+        .footer-link a:hover {
+            color: var(--color-text-accent);
+            padding-left: 8px;
         }
 
-        .map-loading {
+        .footer-link a::before {
+            content: '›';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            left: -12px;
+            opacity: 0;
+            transition: var(--transition-smooth);
+        }
+
+        .footer-link a:hover::before {
+            left: -4px;
+            opacity: 1;
+        }
+
+        .social-links {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-md);
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: clamp(36px, 8vw, 40px);
+            height: clamp(36px, 8vw, 40px);
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            border-radius: 50%;
+            color: var(--color-text-secondary);
+            text-decoration: none;
+            transition: var(--transition-smooth);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            transform: scale(0.8);
+            animation: socialIconPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .social-link:nth-child(1) { animation-delay: 1s; }
+        .social-link:nth-child(2) { animation-delay: 1.1s; }
+        .social-link:nth-child(3) { animation-delay: 1.2s; }
+
+        @keyframes socialIconPop {
+            0% {
+                opacity: 0;
+                transform: scale(0.8);
+            }
+            70% {
+                transform: scale(1.1);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .social-link:hover {
+            background: white;
+            color: var(--color-text-primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .footer-bottom {
+            grid-column: 1 / -1;
+            text-align: center;
+            padding-top: var(--spacing-lg);
+            margin-top: var(--spacing-lg);
+            border-top: 1px solid rgba(0, 0, 0, 0.05);
+            color: var(--color-text-secondary);
+            font-size: clamp(0.8rem, 2vw, 0.875rem);
             display: flex;
             flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: var(--gray-light);
-            z-index: 1;
-        }
-
-        .map-loading-spinner {
-            width: 50px;
-            height: 50px;
-            border: 5px solid var(--gray-medium);
-            border-top-color: var(--natural-blue);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin-bottom: 15px;
-        }
-
-        .map-details {
-            padding: 25px 30px;
-            background-color: var(--gray-light);
-            border-top: 1px solid var(--gray-medium);
-        }
-
-        .map-details h4 {
-            font-size: 1.2rem;
-            margin-bottom: 15px;
-            color: var(--navy);
-        }
-
-        .map-address {
-            display: flex;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .address-item {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .address-item h5 {
-            font-size: 1rem;
-            color: var(--navy);
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-
-        .address-item p {
-            color: var(--gray-dark);
-            margin-bottom: 5px;
-        }
-
-        .map-actions {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-            flex-wrap: wrap;
-        }
-
-        .map-action-btn {
-            background-color: var(--navy);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 6px;
-            font-family: 'Poppins', sans-serif;
-            font-weight: 500;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .map-action-btn:hover {
-            background-color: var(--navy-light);
-            transform: translateY(-2px);
-        }
-
-        .map-action-btn.get-directions {
-            background-color: var(--natural-blue);
-        }
-
-        .map-action-btn.get-directions:hover {
-            background-color: #3a5a8c;
-        }
-
-        /* Notification Panel */
-        .notification-panel {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            width: 350px;
-            background-color: var(--white);
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            z-index: 1002;
+            gap: var(--spacing-xs);
             opacity: 0;
-            visibility: hidden;
-            transform: translateY(-20px);
-            transition: var(--transition);
-            border-left: 4px solid var(--natural-blue);
+            animation: fadeIn 0.6s ease 1.3s both;
         }
 
-        .notification-panel.visible {
-            opacity: 1;
-            visibility: visible;
-            transform: translateY(0);
+        .footer-contact {
+            color: var(--color-text-secondary);
+            font-weight: 300;
+            line-height: 1.6;
+            font-size: clamp(0.85rem, 2vw, 1rem);
         }
 
-        .notification-header {
-            background-color: var(--navy);
-            color: var(--white);
-            padding: 15px 20px;
-            border-radius: var(--border-radius) var(--border-radius) 0 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        .footer-contact a {
+            color: var(--color-text-accent);
+            text-decoration: none;
+            transition: var(--transition-smooth);
         }
 
-        .notification-header h4 {
-            color: var(--white);
-            font-size: 1.1rem;
-            margin: 0;
+        .footer-contact a:hover {
+            text-decoration: underline;
         }
 
-        .close-notification {
-            background: none;
-            border: none;
-            color: var(--white);
-            font-size: 1.2rem;
-            cursor: pointer;
-        }
-
-        .notification-body {
-            padding: 20px;
-        }
-
-        .notification-item {
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid var(--gray-light);
-        }
-
-        .notification-item:last-child {
-            margin-bottom: 0;
-            padding-bottom: 0;
-            border-bottom: none;
-        }
-
-        .notification-label {
-            font-weight: 600;
-            color: var(--navy);
-            display: block;
-            margin-bottom: 5px;
-        }
-
-        .notification-value {
-            color: var(--black);
-        }
-
-        /* Form Status Messages */
-        .form-status {
-            padding: 15px;
-            border-radius: 8px;
-            margin-top: 20px;
-            display: none;
-        }
-
-        .form-status.success {
-            background-color: rgba(46, 204, 113, 0.1);
-            border-left: 4px solid var(--success-green);
-            display: block;
-        }
-
-        .form-status.error {
-            background-color: rgba(231, 76, 60, 0.1);
-            border-left: 4px solid var(--error-red);
-            display: block;
-        }
-
-        .form-status p {
-            margin: 0;
-            color: var(--black);
-        }
-
-        /* Responsive Styles */
-        @media (max-width: 992px) {
-            .hero-content,
-            .contact-container {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-            
-            .hero-text h1 {
-                font-size: 2.5rem;
-            }
-            
-            .floating-shapes {
-                height: 300px;
-            }
-            
-            .footer-content {
+        @media (max-width: 1024px) {
+            .footer-container {
                 grid-template-columns: repeat(2, 1fr);
-                gap: 30px;
+                gap: var(--spacing-md);
             }
             
-            .map-container {
-                height: 400px;
+            .nav-container {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 0.75rem;
+                padding: 0 var(--spacing-sm);
+            }
+            
+            .nav-logo {
+                order: -1;
+                width: 100%;
+                text-align: center;
+                margin-bottom: 0.5rem;
             }
         }
 
         @media (max-width: 768px) {
-            .nav-links {
+            body {
+                padding-top: 60px;
+            }
+
+            .top-nav {
+                padding: 0.75rem 0;
+            }
+
+            .nav-container {
+                padding: 0 var(--spacing-sm);
+                gap: 0.5rem;
+            }
+
+            .nav-logo {
+                font-size: 1.25rem;
+                order: 0;
+                width: auto;
+                margin-bottom: 0;
+                flex: none;
+            }
+
+            .back-home {
+                order: -1;
+            }
+
+            .nav-actions {
+                order: 1;
+                justify-content: flex-end;
+            }
+
+            .nav-divider {
                 display: none;
-                position: absolute;
-                top: 100%;
-                left: 0;
-                width: 100%;
-                background-color: var(--white);
-                flex-direction: column;
-                padding: 20px;
-                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-                gap: 15px;
+            }
+
+            .gallery-title {
+                font-size: 2.5rem;
             }
             
-            .nav-links a {
-                color: var(--navy);
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr));
+                gap: var(--spacing-md);
             }
             
-            .nav-links.active {
+            .category-nav {
+                gap: var(--spacing-sm);
+            }
+            
+            .category-tab {
+                font-size: 0.875rem;
+                padding: 0.6rem 1.2rem;
+            }
+            
+            .lightbox-title {
+                font-size: 1.5rem;
+            }
+            
+            .lightbox-artist {
+                font-size: 1.125rem;
+            }
+            
+            .footer-container {
+                grid-template-columns: 1fr;
+                gap: var(--spacing-lg);
+            }
+            
+            .footer-section {
+                text-align: center;
+            }
+            
+            .social-links {
+                justify-content: center;
+            }
+            
+            .swipe-hint {
                 display: flex;
             }
-            
-            .mobile-menu-btn {
-                display: block;
+        }
+
+        @media (max-width: 640px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(min(240px, 100%), 1fr));
             }
             
-            .hero {
-                padding: 60px 0 30px;
-            }
-            
-            .hero-text h1 {
-                font-size: 2.2rem;
-            }
-            
-            .contact-form,
-            .info-card {
-                padding: 30px 20px;
-            }
-            
-            .footer-content {
+            .footer-container {
                 grid-template-columns: 1fr;
-                gap: 30px;
+                gap: var(--spacing-lg);
             }
             
-            .notification-panel {
-                width: 90%;
-                left: 50%;
-                transform: translateX(-50%) translateY(-20px);
+            .footer-section {
+                text-align: center;
             }
             
-            .notification-panel.visible {
-                transform: translateX(-50%) translateY(0);
-            }
-            
-            .map-container {
-                height: 350px;
-            }
-            
-            .map-modal-content {
-                width: 98%;
-                padding: 0;
-            }
-            
-            .map-address {
-                flex-direction: column;
-                gap: 15px;
-            }
-            
-            .map-actions {
+            .social-links {
                 justify-content: center;
+            }
+            
+            .nav-container {
+                flex-wrap: nowrap;
+            }
+            
+            .back-home span {
+                display: none;
+            }
+            
+            .back-home i {
+                margin-right: 0;
             }
         }
 
         @media (max-width: 480px) {
-            .hero-text h1 {
-                font-size: 1.8rem;
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
             }
             
-            .section-title h2 {
-                font-size: 2rem;
+            .container {
+                padding: 0 var(--spacing-sm);
             }
             
-            .info-card {
-                flex-direction: column;
-                gap: 15px;
+            .gallery-footer {
+                padding: var(--spacing-lg) 0;
+            }
+
+            .nav-container {
+                padding: 0 var(--spacing-sm);
+            }
+
+            .back-home {
+                font-size: 0.875rem;
+                padding: 0.4rem 0.8rem;
+            }
+        }
+
+        @media (max-width: 360px) {
+            .gallery-grid {
+                gap: var(--spacing-sm);
             }
             
-            .info-icon {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
+            .category-tab {
+                padding: 0.4rem 0.8rem;
+                font-size: 0.75rem;
             }
             
-            .map-container {
-                height: 300px;
+            .art-card {
+                aspect-ratio: 3/4;
             }
             
-            .map-header {
-                padding: 15px 20px;
+            .nav-logo {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (min-width: 2000px) {
+            .container, .nav-container, .footer-container {
+                max-width: 1800px;
             }
             
-            .map-header h3 {
-                font-size: 1.3rem;
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            }
+        }
+
+        @media print {
+            .top-nav, .category-nav, .lightbox, .gallery-footer {
+                display: none !important;
             }
             
-            .map-details {
-                padding: 20px;
+            body {
+                padding-top: 0;
+                background: white;
+            }
+            
+            .art-card {
+                break-inside: avoid;
+                page-break-inside: avoid;
+            }
+        }
+
+        .category-tab:focus-visible,
+        .back-home:focus-visible,
+        .nav-contact:focus-visible {
+            outline: 2px solid var(--color-text-accent);
+            outline-offset: 2px;
+        }
+
+        .art-card:focus-within {
+            outline: 2px solid var(--color-text-accent);
+            outline-offset: 4px;
+        }
+
+        .lightbox-close:focus-visible,
+        .lightbox-prev:focus-visible,
+        .lightbox-next:focus-visible,
+        .lightbox-toggle-info:focus-visible {
+            outline: 2px solid white;
+            outline-offset: 2px;
+        }
+
+        .footer-link a:focus-visible,
+        .social-link:focus-visible {
+            outline: 2px solid var(--color-text-accent);
+            outline-offset: 2px;
+        }
+
+        @media (prefers-contrast: high) {
+            :root {
+                --color-text-primary: #000000;
+                --color-text-secondary: #333333;
+                --color-border: rgba(0, 0, 0, 0.3);
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            .art-card,
+            .card-image,
+            .card-content,
+            .category-nav,
+            .gallery-header,
+            .footer-section,
+            .footer-link,
+            .social-link,
+            .footer-bottom,
+            .multiple-images-indicator,
+            .lightbox-close,
+            .lightbox-prev,
+            .lightbox-next,
+            .lightbox-toggle-info,
+            .lightbox-counter {
+                animation: none !important;
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+            
+            .art-card:hover {
+                transform: none;
+            }
+            
+            .lightbox {
+                transition: none;
+            }
+            
+            .footer-link a:hover {
+                padding-left: 0;
+            }
+
+            .back-home:hover {
+                transform: none;
+            }
+            
+            .swipe-hint {
+                animation: none;
+                opacity: 0.5;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="header-content">
-                <a href="#" class="logo">
-                    <i class="fas fa-palette"></i>
-                    Johnson
-                </a>
-                
-                <button class="mobile-menu-btn" id="mobileMenuBtn">
-                    <i class="fas fa-bars"></i>
-                </button>
-                
-                <ul class="nav-links" id="navLinks">
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="index.html">Benefits</a></li>
-                    <li><a href="index.html">Services</a></li>
-                    <li><a href="contact.html" class="navy-text">Contact</a></li>
-                    <li><a href="gallery.html">Explore</a></li>
-                </ul>
+    <!-- All your original HTML body content remains exactly the same -->
+    <!-- Top Navigation Bar -->
+    <nav class="top-nav" aria-label="Main navigation">
+        <div class="nav-container">
+            <a href="index.html" class="back-home">
+                <i class="fas fa-arrow-left"></i>
+                Back to Home
+            </a>
+            
+            <a href="#" class="nav-logo">Johnson Kamau</a>
+            
+            <div class="nav-actions">
+                <div class="nav-divider"></div>
+                <a href="contact.html" class="nav-contact">Contact Curator</a>
             </div>
         </div>
-    </header>
+    </nav>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1>Let's Create <span>Something Amazing</span> Together</h1>
-                    <p>Your vision deserves exceptional design. Reach out to our team of creative experts and let's transform your ideas into visual masterpieces that captivate and inspire.</p>
-                </div>
-                <div class="hero-visual">
-                    <div class="floating-shapes">
-                        <div class="shape shape-1"></div>
-                        <div class="shape shape-2"></div>
-                        <div class="shape shape-3"></div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <div class="container">
+        <header class="gallery-header">
+            <h1 class="gallery-title">Curated Exhibition</h1>
+            <p class="gallery-subtitle">A digital gallery presenting contemporary works across mediums. Each piece is selected for its narrative and technical innovation.</p>
+        </header>
 
-    <!-- Contact Section -->
-    <section class="contact-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Get In Touch</h2>
-                <p>Have a project in mind? Fill out the form below and we'll get back to you within 24 hours.</p>
-            </div>
-            
-            <div class="contact-container">
-                <!-- Contact Form -->
-                <div class="contact-form">
-                    <form id="contactForm">
-                        <div class="form-group">
-                            <label for="name" class="navy-text">Full Name *</label>
-                            <div class="input-icon">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <input type="text" id="name" name="name" placeholder="Your name" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="email" class="navy-text">Email Address *</label>
-                            <div class="input-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="phone" class="navy-text">Phone Number</label>
-                            <div class="input-icon">
-                                <i class="fas fa-phone"></i>
-                            </div>
-                            <input type="tel" id="phone" name="phone" placeholder="Enter your contact">
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="projectType" class="navy-text">Project Type *</label>
-                            <div class="input-icon">
-                                <i class="fas fa-briefcase"></i>
-                            </div>
-                            <select id="projectType" name="projectType" required>
-                                <option value="" disabled selected>Select a project type</option>
-                                <option value="branding">Branding & Identity</option>
-                            
-                                <option value="print">Print Design</option>
-                                <option value="illustration">Illustration</option>
-                                <option value="other">Other</option>
-                            </select>
-                        </div>
-                        
-                        <div class="form-group">
-                            <label for="message" class="navy-text">Your Message *</label>
-                            <div class="input-icon">
-                                <i class="fas fa-comment-dots"></i>
-                            </div>
-                            <textarea id="message" name="message" placeholder="Tell us about your project, timeline, and budget..." required></textarea>
-                        </div>
-                        
-                        <!-- Form Status Messages -->
-                        <div id="formStatus" class="form-status"></div>
-                        
-                        <button type="submit" class="submit-btn" id="submitBtn">
-                            <i class="fas fa-paper-plane"></i> Send Message
-                        </button>
-                    </form>
-                </div>
-                
-                <!-- Contact Info -->
-                <div class="contact-info">
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-envelope-open-text"></i>
-                        </div>
-                        <div class="info-content">
-                            <h3 class="navy-text">Email Us</h3>
-                            <p>johnson@gmail.com</p>
-                            <button class="copy-btn" data-text="hello@visionarydesign.co">
-                                <i class="far fa-copy"></i> Copy Email
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-phone-alt"></i>
-                        </div>
-                        <div class="info-content">
-                            <h3 class="navy-text">Call Us</h3>
-                            <p>0717 293 345</p>
-                            
-                        </div>
-                    </div>
-                    
-                    <div class="info-card map-card" id="mapCard">
-                        <div class="info-icon">
-                            <i class="fas fa-map-marker-alt"></i>
-                        </div>
-                        <div class="info-content">
-                            <h3 class="navy-text">Visit Our Studio</h3>
-                            <p>Nairobi, Kenya</p>
-                            
-                            <div class="map-preview">
-                                <!-- Preview image for Nairobi, Kenya -->
-                                <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80" alt="Nairobi Map Preview" class="map-preview-image">
-                                <div class="map-overlay">
-                                    <i class="fas fa-map-marked-alt"></i> Click to View Location
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="info-card">
-                        <div class="info-icon">
-                            <i class="fas fa-hashtag"></i>
-                        </div>
-                        <div class="info-content">
-                            <h3 class="navy-text">Follow Us</h3>
-                            <p>Stay connected for design inspiration</p>
-                            <div class="social-links">
-                                <a href="#" class="social-link" aria-label="Instagram">
-                                    <i class="fab fa-instagram"></i>
-                                </a>
-                                
-                                <a href="#" class="social-link" aria-label="LinkedIn">
-                                    <i class="fab fa-linkedin-in"></i>
-                                </a>
-                                <a href="#" class="social-link" aria-label="Behance">
-                                    <i class="fab fa-behance"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            
-        </div>
-    </section>
+        <nav class="category-nav" role="tablist" aria-label="Artwork categories">
+            <button class="category-tab active" role="tab" aria-selected="true" data-category="paintings">Screens</button>
+            <button class="category-tab" role="tab" aria-selected="false" data-category="photography">Photography</button>
+            <button class="category-tab" role="tab" aria-selected="false" data-category="sculptures">Sculptures</button>
+            <button class="category-tab" role="tab" aria-selected="false" data-category="digital">Digital Art</button>
+        </nav>
 
-    <!-- FAQ Section -->
-    <section class="faq-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Frequently Asked Questions</h2>
-                <p>Find quick answers to common questions about working with our design team.</p>
+        <main class="gallery-container">
+            <!-- Paintings Section -->
+            <section id="paintings" class="category-section active" role="tabpanel" aria-labelledby="paintings-tab">
+                <div class="gallery-grid">
+                    <!-- All 5 painting cards from original code -->
+                    <article class="art-card" tabindex="0" data-art-id="painting-1">
+                        <div class="card-image-container" 
+                             data-title="Azure Resonance"
+                             data-artist="Maya Chen"
+                             data-meta="2023 • Oil on canvas"
+                             data-description="A contemporary exploration of texture and color, where deep blues merge with metallic gold leaf to create a sense of depth and movement."
+                             data-dimensions="150 × 200 cm"
+                             data-location="Studio 42, Berlin"
+                             data-images='["Screens/1.png","Screens/2.png","Screens/3.png","Screens/4.png","Screens/5.png","Screens/6.png","Screens/7.png","Screens/8.png","Screens/9.png","Screens/10.png","Screens/11.png","Screens/12.png","Screens/13.png","Screens/14.png","Screens/15.png","Screens/16.png","Screens/17.png","Screens/18.png","Screens/19.png","Screens/20.png","Screens/21.png","Screens/22.png","Screens/23.png","Screens/24.png","Screens/25.png","Screens/26.png","Screens/27.png","Screens/28.png","Screens/29.png"]'>
+                            <img src="Screens/1.png" alt="Azure Resonance - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">28</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Azure Resonance</h3>
+                                <p class="overlay-artist">Maya Chen</p>
+                                <p class="overlay-meta">2023 • Oil on canvas</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Azure Resonance</h3>
+                            <p class="artist-name">Maya Chen</p>
+                            <p class="art-meta">Oil on canvas</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="painting-2">
+                        <div class="card-image-container" 
+                             data-title="Terracotta Memories"
+                             data-artist="James Rivera"
+                             data-meta="2022 • Mixed media"
+                             data-description="Layered textures of earth pigments, sand, and acrylic create a tactile surface that references archaeological strata."
+                             data-dimensions="120 × 180 cm"
+                             data-location="Private Collection"
+                             data-images='["Assets/1.jpg","Assets/2.jpg","Assets/3.jpg","Assets/4.jpg","Assets/5.jpg","Assets/6.jpg"]'>
+                            <img src="Assets/1.jpg" alt="Terracotta Memories - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">6</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Terracotta Memories</h3>
+                                <p class="overlay-artist">James Rivera</p>
+                                <p class="overlay-meta">2022 • Mixed media</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Terracotta Memories</h3>
+                            <p class="artist-name">James Rivera</p>
+                            <p class="art-meta">Mixed media</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="painting-3">
+                        <div class="card-image-container" 
+                             data-title="Construct No. 14"
+                             data-artist="Sarah Klein"
+                             data-meta="2023 • Acrylic on wood"
+                             data-description="Precision and geometry meet organic imperfection in this systematic exploration of form."
+                             data-dimensions="90 × 90 cm"
+                             data-location="Modern Art Museum, Tokyo"
+                             data-images='["Drone/1.jpg","Drone/2.jpg","Drone/3.jpg","Drone/4.jpg","Drone/5.jpg"]'>
+                            <img src="Drone/1.jpg" alt="Construct No. 14 - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">5</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Construct No. 14</h3>
+                                <p class="overlay-artist">Sarah Klein</p>
+                                <p class="overlay-meta">2023 • Acrylic on wood</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Construct No. 14</h3>
+                            <p class="artist-name">Sarah Klein</p>
+                            <p class="art-meta">Acrylic on wood</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="painting-4">
+                        <div class="card-image-container" 
+                             data-title="Vermilion Dawn"
+                             data-artist="Alexandre Dubois"
+                             data-meta="2023 • Oil and resin"
+                             data-description="A study in color transitions, capturing the moment when night gives way to morning light."
+                             data-dimensions="100 × 150 cm"
+                             data-location="Gallery Nord, Paris"
+                             data-images='["Town House/1.png","Town House/2.png","Town House/3.png","Town House/4.png","Town House/5.png","Town House/6.png","Town House/7.png","Town House/8.png","Town House/9.png","Town House/10.png"]'>
+                            <img src="Town House/1.png" alt="Vermilion Dawn - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">10</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Vermilion Dawn</h3>
+                                <p class="overlay-artist">Alexandre Dubois</p>
+                                <p class="overlay-meta">2023 • Oil and resin</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Vermilion Dawn</h3>
+                            <p class="artist-name">Alexandre Dubois</p>
+                            <p class="art-meta">Oil and resin</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="painting-5">
+                        <div class="card-image-container" 
+                             data-title="Ethereal Forms"
+                             data-artist="Isabella Rossi"
+                             data-meta="2022 • Watercolor on paper"
+                             data-description="Delicate washes of color create fluid, organic shapes that seem to float across the surface."
+                             data-dimensions="70 × 100 cm"
+                             data-location="Contemporary Arts Center, Milan"
+                             data-images='["Landing/1.png","Landing/2.png","Landing/3.png","Landing/4.png","Landing/5.png"]'>
+                            <img src="Landing/1.png" alt="Ethereal Forms - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">5</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Ethereal Forms</h3>
+                                <p class="overlay-artist">Isabella Rossi</p>
+                                <p class="overlay-meta">2022 • Watercolor on paper</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Ethereal Forms</h3>
+                            <p class="artist-name">Isabella Rossi</p>
+                            <p class="art-meta">Watercolor on paper</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Photography Section -->
+            <section id="photography" class="category-section" role="tabpanel" aria-labelledby="photography-tab" hidden>
+                <div class="gallery-grid">
+                    <!-- All 2 photography cards from original code -->
+                    <article class="art-card" tabindex="0" data-art-id="photo-1">
+                        <div class="card-image-container" 
+                             data-title="Alpine Silence"
+                             data-artist="Thomas Weber"
+                             data-meta="2022 • Silver gelatin print"
+                             data-description="Shot at dawn in the Swiss Alps, this long-exposure photograph captures the ephemeral quality of mountain light."
+                             data-dimensions="40 × 60 cm"
+                             data-location="Mountain Photography Archive, Zurich"
+                             data-images='["L Art/Asset 5.jpg","L Art/Asset 6.jpg","L Art/Asset 7.jpg","L Art/Asset 8.jpg"]'>
+                            <img src="L Art/Asset 5.jpg" alt="Alpine Silence - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">4</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Alpine Silence</h3>
+                                <p class="overlay-artist">Thomas Weber</p>
+                                <p class="overlay-meta">2022 • Silver gelatin print</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Alpine Silence</h3>
+                            <p class="artist-name">Thomas Weber</p>
+                            <p class="art-meta">Silver gelatin print</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="photo-2">
+                        <div class="card-image-container" 
+                             data-title="Urban Geometry"
+                             data-artist="Aisha Patel"
+                             data-meta="2023 • Digital C-print"
+                             data-description="An exploration of architectural patterns in Mumbai's contemporary buildings."
+                             data-dimensions="50 × 75 cm"
+                             data-location="Architectural Photography Museum, Mumbai"
+                             data-images='["Johnson/Asset 3.jpg","Johnson/Asset 2.jpg","Johnson/Asset 4.jpg","Johnson/Asset 5.jpg","Johnson/Asset 6.jpg","Johnson/Asset 7.jpg","Johnson/Asset 8.jpg","Johnson/Asset 9.jpg","Johnson/Asset 10.jpg","Johnson/Asset 11.jpg"]'>
+                            <img src="Johnson/Asset 3.jpg" alt="Urban Geometry - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">10</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Urban Geometry</h3>
+                                <p class="overlay-artist">Aisha Patel</p>
+                                <p class="overlay-meta">2023 • Digital C-print</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Urban Geometry</h3>
+                            <p class="artist-name">Aisha Patel</p>
+                            <p class="art-meta">Digital C-print</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Sculptures Section -->
+            <section id="sculptures" class="category-section" role="tabpanel" aria-labelledby="sculptures-tab" hidden>
+                <div class="gallery-grid">
+                    <!-- All 2 sculpture cards from original code -->
+                    <article class="art-card" tabindex="0" data-art-id="sculpture-1">
+                        <div class="card-image-container" 
+                             data-title="Form in Motion"
+                             data-artist="Carlos Mendez"
+                             data-meta="2021 • Bronze"
+                             data-description="Cast using the lost-wax technique, this bronze sculpture captures dynamic tension between solid form and implied movement."
+                             data-dimensions="180 × 90 × 60 cm"
+                             data-location="Sculpture Park, Madrid"
+                             data-images='["Medipharma/Start.png","Medipharma/Register.png","Medipharma/Sign In.png","Medipharma/OTP.png","Medipharma/Success.png","Medipharma/Onboard 1.png","Medipharma/Onboard 2.png","Medipharma/Onboard 3.png","Medipharma/Splash Screen.png","Medipharma/Landing Screen.png","Medipharma/Category.png","Medipharma/Categgory.png","Medipharma/Prescription Upload.png","Medipharma/Product Description Screen.png","Medipharma/Location.png","Medipharma/Medibag.png","Medipharma/Medicine Bag.png","Medipharma/My Orders.png","Medipharma/Check Out.png","Medipharma/Payment Method.png","Medipharma/Card Details.png","Medipharma/Success.png","Medipharma/Menu.png"]'>
+                            <img src="Medipharma/Start.png" alt="Form in Motion - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">23</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Form in Motion</h3>
+                                <p class="overlay-artist">Carlos Mendez</p>
+                                <p class="overlay-meta">2021 • Bronze</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Form in Motion</h3>
+                            <p class="artist-name">Carlos Mendez</p>
+                            <p class="art-meta">Bronze</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="sculpture-2">
+                        <div class="card-image-container" 
+                             data-title="Echoes of Time"
+                             data-artist="Giovanni Russo"
+                             data-meta="2020 • Carrara marble"
+                             data-description="Carved from a single block of Carrara marble, this work references classical forms while introducing contemporary fracture lines."
+                             data-dimensions="220 × 80 × 80 cm"
+                             data-location="Classical Arts Museum, Rome"
+                             data-images='["Solva Concept/1.jpg","Solva Concept/2.jpg","Solva Concept/3.jpg","Solva Concept/4.jpg","Solva Concept/5.jpg","Solva Concept/6.jpg","Solva Concept/7.jpg","Solva Concept/8.jpg"]'>
+                            <img src="Solva Concept/1.jpg" alt="Echoes of Time - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">8</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Echoes of Time</h3>
+                                <p class="overlay-artist">Giovanni Russo</p>
+                                <p class="overlay-meta">2020 • Carrara marble</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Echoes of Time</h3>
+                            <p class="artist-name">Giovanni Russo</p>
+                            <p class="art-meta">Carrara marble</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+
+            <!-- Digital Art Section -->
+            <section id="digital" class="category-section" role="tabpanel" aria-labelledby="digital-tab" hidden>
+                <div class="gallery-grid">
+                    <!-- All 2 digital art cards from original code -->
+                    <article class="art-card" tabindex="0" data-art-id="digital-1">
+                        <div class="card-image-container" 
+                             data-title="Neural Bloom"
+                             data-artist="Zara Kim"
+                             data-meta="2023 • Generative algorithm"
+                             data-description="A real-time generative artwork created using custom machine learning algorithms."
+                             data-dimensions="Digital, variable dimensions"
+                             data-location="Digital Arts Foundation, Seoul"
+                             data-images='["Solva Concept/Solva Concept_page-0001.jpg","Solva Concept/Solva Concept_page-0002.jpg","Solva Concept/Solva Concept_page-0003.jpg","Solva Concept/Solva Concept_page-0004.jpg","Solva Concept/Solva Concept_page-0005.jpg","Solva Concept/Solva Concept_page-0006.jpg"]'>
+                            <img src="Solva Concept/Solva Concept_page-0001.jpg" alt="Neural Bloom - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">6</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Neural Bloom</h3>
+                                <p class="overlay-artist">Zara Kim</p>
+                                <p class="overlay-meta">2023 • Generative algorithm</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Neural Bloom</h3>
+                            <p class="artist-name">Zara Kim</p>
+                            <p class="art-meta">Generative algorithm</p>
+                        </div>
+                    </article>
+
+                    <article class="art-card" tabindex="0" data-art-id="digital-2">
+                        <div class="card-image-container" 
+                             data-title="Synthetic Horizons"
+                             data-artist="Alexei Volkov"
+                             data-meta="2022 • 3D rendering"
+                             data-description="A virtual landscape constructed from photogrammetry data of real locations."
+                             data-dimensions="Digital, 4K resolution"
+                             data-location="Virtual Arts Museum, Moscow"
+                             data-images='["Mock Ups/1.png","Mock Ups/2.png","Mock Ups/3.png","Mock Ups/4.png","Mock Ups/5.png","Mock Ups/6.png","Mock Ups/7.png","Mock Ups/8.png","Mock Ups/9.png","Mock Ups/10.png","Mock Ups/11b.png","Mock Ups/12.png","Mock Ups/13.png","Mock Ups/14.png","Mock Ups/15.png","Mock Ups/16.png","Mock Ups/17.png","Mock Ups/18.png","Mock Ups/19.png","Mock Ups/20.png","Mock Ups/21.png","Mock Ups/22.png","Mock Ups/23.png","Mock Ups/24.png"]'>
+                            <img src="Mock Ups/1.png" alt="Synthetic Horizons - Main view" class="card-image" loading="eager">
+                            <div class="multiple-images-indicator">24</div>
+                            <div class="card-overlay">
+                                <h3 class="overlay-title">Synthetic Horizons</h3>
+                                <p class="overlay-artist">Alexei Volkov</p>
+                                <p class="overlay-meta">2022 • 3D rendering</p>
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h3 class="art-title">Synthetic Horizons</h3>
+                            <p class="artist-name">Alexei Volkov</p>
+                            <p class="art-meta">3D rendering</p>
+                        </div>
+                    </article>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Lightbox -->
+    <div class="lightbox" role="dialog" aria-modal="true" aria-label="Artwork detail view">
+        <button class="lightbox-close" aria-label="Close lightbox">×</button>
+        <div class="lightbox-nav">
+            <button class="lightbox-prev" aria-label="Previous image">‹</button>
+            <button class="lightbox-next" aria-label="Next image">›</button>
+        </div>
+        <div class="lightbox-content">
+            <div class="lightbox-image-container">
+                <img src="" alt="" class="lightbox-image">
             </div>
-            
-            <div class="faq-container">
-                <div class="faq-item" id="faq1">
-                    <div class="faq-question">
-                        <h3 class="navy-text">What's your typical design process?</h3>
-                        <div class="faq-icon">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Our process begins with a discovery call to understand your vision, followed by research, concept development, design execution, and iterative refinements. We maintain transparent communication throughout to ensure the final product exceeds expectations.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item" id="faq2">
-                    <div class="faq-question">
-                        <h3 class="navy-text">How long does a typical project take?</h3>
-                        <div class="faq-icon">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Timeline varies based on project scope. A brand identity might take 4-6 weeks, while a comprehensive website design could take 8-12 weeks. We provide detailed timelines during our initial consultation and work diligently to meet agreed-upon deadlines.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item" id="faq3">
-                    <div class="faq-question">
-                        <h3 class="navy-text">What are your pricing structures?</h3>
-                        <div class="faq-icon">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                    </div>
-                    <div class="faq-answer">
-                        <p>We offer both fixed-price packages for common projects and custom quotes for unique needs. Our pricing is transparent with no hidden fees. We'll provide a detailed proposal after understanding your project requirements and budget.</p>
-                    </div>
-                </div>
-                
-                <div class="faq-item" id="faq4">
-                    <div class="faq-question">
-                        <h3 class="navy-text">Do you offer ongoing design support?</h3>
-                        <div class="faq-icon">
-                            <i class="fas fa-plus"></i>
-                        </div>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Yes! We offer retainer packages for clients who need continuous design support. These can include a set number of hours per month, priority access to our team, and discounted rates for ongoing work.</p>
-                    </div>
-                </div>
+            <div class="lightbox-info-panel">
+                <h2 class="lightbox-title"></h2>
+                <p class="lightbox-artist"></p>
+                <p class="lightbox-meta"></p>
+                <p class="lightbox-description"></p>
+                <div class="lightbox-details"></div>
+            </div>
+            <div class="swipe-hint">
+                <i class="fas fa-arrow-left"></i>
+                <span>Swipe to view more images</span>
+                <i class="fas fa-arrow-right"></i>
             </div>
         </div>
-    </section>
+        <div class="lightbox-counter"></div>
+        <button class="lightbox-toggle-info" aria-label="Toggle information panel">
+            <i class="fas fa-info"></i>
+        </button>
+    </div>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-column">
-                    <a href="#" class="footer-logo">
-                        Johnson Kamau Mwangi.
+    <footer class="gallery-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3 class="footer-heading">Quick Links</h3>
+                <ul class="footer-links">
+                    <li class="footer-link"><a href="index.html">Services</a></li>
+                    <li class="footer-link"><a href="index.html">Benefits</a></li>
+                    <li class="footer-link"><a href="index.html">Process</a></li>
+                    <li class="footer-link"><a href="contact.html">Contact</a></li>
+                    <li class="footer-link"><a href="gallery.html">Gallery</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3 class="footer-heading">Connect</h3>
+                <div class="footer-contact">
+                    <p>Email: <a href="mailto:mosesdevtech@gmail.com">mosesdevtech@gmail.com</a></p>
+                    <p>Phone: <a href="tel:+254717892776">+254717 892 776</a></p>
+                </div>
+                <div class="social-links">
+                    <a href="https://behance.net" class="social-link" aria-label="Behance">
+                        <i class="fab fa-behance"></i>
                     </a>
-                    <p>Transforming visions into remarkable visual experiences. We are a creative design agency specializing in branding, web design, and visual communication.</p>
-                    <div class="footer-social-links">
-                        <a href="#" class="footer-social-link" aria-label="Instagram">
-                            <i class="fab fa-instagram"></i>
-                        </a>
-                        <a href="#" class="footer-social-link" aria-label="Dribbble">
-                            <i class="fab fa-dribbble"></i>
-                        </a>
-                        <a href="#" class="footer-social-link" aria-label="LinkedIn">
-                            <i class="fab fa-linkedin-in"></i>
-                        </a>
-                        <a href="#" class="footer-social-link" aria-label="Behance">
-                            <i class="fab fa-behance"></i>
-                        </a>
-                    </div>
-                </div>
-                
-                <div class="footer-column">
-                    <h3>Quick Links</h3>
-                    <ul class="footer-links">
-                        <li><a href="index.html">Home</a></li>
-                        <li><a href="index.html">Our Services</a></li>
-                        <li><a href="index.html">Benefits</a></li>
-                        <li><a href="gallery.html">Explore</a></li>
-                        <li><a href="contact.html">Contact</a></li>
-                    </ul>
-                </div>
-                
-                
-                
-                <div class="footer-column">
-                    <h3>Contact Info</h3>
-                    <ul class="footer-links">
-                        <li><a href="mailto:johnson@gmail.com">johnson@gmail.com</a></li>
-                        <li><a href="tel:+254717293345">0717 293 345</a></li>
-                        <li>Nairobi, Kenya</li>
-                        
-                    </ul>
+                    <a href="https://instagram.com" class="social-link" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://linkedin.com" class="social-link" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2025 Johnson Kamau. All rights reserved.</p>
+            
+            <div class="footer-bottom">
+                <p>Curated Exhibition • Digital Gallery • All works © Johnson Kamau</p>
             </div>
         </div>
     </footer>
 
-    <!-- Back to Top Button -->
-    <a href="#" class="back-to-top" id="backToTop">
-        <i class="fas fa-chevron-up"></i>
-    </a>
-
-    <!-- Success Modal -->
-    <div class="modal" id="successModal">
-        <div class="modal-content">
-            <div class="modal-icon">
-                <i class="fas fa-check-circle"></i>
-            </div>
-            <h3 class="navy-text">Message Sent Successfully!</h3>
-            <p>Thank you for contacting us. We've received your message and will respond within 24 hours.</p>
-            <button class="close-modal" id="closeModal">Got It!</button>
-        </div>
-    </div>
-
-    <!-- Google Maps Modal -->
-    <div class="modal map-modal" id="mapModal">
-        <div class="map-modal-content">
-            <div class="map-header">
-                <h3>Our Studio Location - Nairobi, Kenya</h3>
-                <button class="close-map" id="closeMap">
-                    <i class="fas fa-times"></i>
-                </button>
-            </div>
-            <div class="map-container">
-                <div class="map-loading" id="mapLoading">
-                    <div class="map-loading-spinner"></div>
-                    <p>Loading Google Maps...</p>
-                </div>
-                <!-- Embedded Google Map with your location -->
-                <iframe 
-                    id="embeddedGoogleMap"
-                    src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3989.74234510942!2d36.8716299!3d-1.2871268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1704800000000!5m2!1sen!2ske"
-                    width="100%"
-                    height="100%"
-                    style="border:0;"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                    title="Visionary Design Studio Location in Nairobi, Kenya">
-                </iframe>
-            </div>
-            <div class="map-details">
-                <h4>Johnson Kamau Design Studio - Nairobi</h4>
-                <div class="map-address">
-                    <div class="address-item">
-                        <h5>Location</h5>
-                        <p>Nairobi, Kenya</p>
-                       
-                    </div>
-                    <div class="address-item">
-                        <h5>Contact</h5>
-                        <p>Email: johnson@gmail.com</p>
-                        <p>Phone: +254 717 892 776</p>
-                        <p>WhatsApp: +254 717 892 776</p>
-                    </div>
-                    
-                </div>
-                <div class="map-actions">
-                    <a href="https://www.google.com/maps/dir//-1.2871268,36.8716299" target="_blank" class="map-action-btn get-directions">
-                        <i class="fas fa-directions"></i> Get Directions
-                    </a>
-                    <button class="map-action-btn" id="copyAddressBtn">
-                        <i class="far fa-copy"></i> Copy Coordinates
-                    </button>
-                    <a href="tel:+254717 293 345" class="map-action-btn">
-                        <i class="fas fa-phone"></i> Call Us
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Notification Panel -->
-    <div class="notification-panel" id="notificationPanel">
-        <div class="notification-header">
-            <h4>New Contact Form Submission</h4>
-            <button class="close-notification" id="closeNotification">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-        <div class="notification-body">
-            <div class="notification-item">
-                <span class="notification-label">Project Type:</span>
-                <span class="notification-value" id="notificationProjectType">Not specified</span>
-            </div>
-            <div class="notification-item">
-                <span class="notification-label">From:</span>
-                <span class="notification-value" id="notificationName">Not specified</span>
-            </div>
-            <div class="notification-item">
-                <span class="notification-label">Email:</span>
-                <span class="notification-value" id="notificationEmail">Not specified</span>
-            </div>
-            <div class="notification-item">
-                <span class="notification-label">Message Preview:</span>
-                <span class="notification-value" id="notificationMessage">Not specified</span>
-            </div>
-            <div class="notification-item">
-                <span class="notification-label">Time:</span>
-                <span class="notification-value" id="notificationTime">Just now</span>
-            </div>
-        </div>
-    </div>
-
     <script>
-        // Your Google Maps location (Nairobi, Kenya)
-        const yourLocation = {
-            lat: -1.2871268,
-            lng: 36.8716299,
-            zoom: 17,
-            address: "Nairobi, Kenya",
-            embedUrl: "https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d3989.74234510942!2d36.8716299!3d-1.2871268!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2ske!4v1704800000000!5m2!1sen!2ske"
-        };
-        
-        // Mobile Menu Toggle
-        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
-        const navLinks = document.getElementById('navLinks');
-        
-        mobileMenuBtn.addEventListener('click', () => {
-            navLinks.classList.toggle('active');
-            mobileMenuBtn.innerHTML = navLinks.classList.contains('active') 
-                ? '<i class="fas fa-times"></i>' 
-                : '<i class="fas fa-bars"></i>';
-        });
-        
-        // FAQ Accordion
-        const faqItems = document.querySelectorAll('.faq-item');
-        
-        faqItems.forEach(item => {
-            const question = item.querySelector('.faq-question');
-            const icon = item.querySelector('.faq-icon i');
+        document.addEventListener('DOMContentLoaded', () => {
+            // Enhanced Mobile Lightbox Support
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
             
-            question.addEventListener('click', () => {
-                // Close all other FAQ items
-                faqItems.forEach(otherItem => {
-                    if (otherItem !== item && otherItem.classList.contains('active')) {
-                        otherItem.classList.remove('active');
-                        otherItem.querySelector('.faq-icon i').className = 'fas fa-plus';
+            // Image quality optimization
+            const optimizeImageQuality = () => {
+                const images = document.querySelectorAll('.card-image, .lightbox-image');
+                images.forEach(img => {
+                    img.style.filter = 'none';
+                    img.style.webkitFilter = 'none';
+                    img.style.imageRendering = 'auto';
+                    img.style.webkitFontSmoothing = 'antialiased';
+                    img.style.transform = 'translateZ(0)';
+                    img.style.filter = 'brightness(1.02) contrast(1.05)';
+                });
+            };
+
+            // Call optimization
+            optimizeImageQuality();
+            
+            const tabs = document.querySelectorAll('.category-tab');
+            const sections = document.querySelectorAll('.category-section');
+            const lightbox = document.querySelector('.lightbox');
+            const lightboxImage = document.querySelector('.lightbox-image');
+            const lightboxTitle = document.querySelector('.lightbox-title');
+            const lightboxArtist = document.querySelector('.lightbox-artist');
+            const lightboxMeta = document.querySelector('.lightbox-meta');
+            const lightboxDescription = document.querySelector('.lightbox-description');
+            const lightboxDetails = document.querySelector('.lightbox-details');
+            const lightboxClose = document.querySelector('.lightbox-close');
+            const lightboxPrev = document.querySelector('.lightbox-prev');
+            const lightboxNext = document.querySelector('.lightbox-next');
+            const lightboxCounter = document.querySelector('.lightbox-counter');
+            const lightboxToggleInfo = document.querySelector('.lightbox-toggle-info');
+            const lightboxInfoPanel = document.querySelector('.lightbox-info-panel');
+            
+            let currentArtwork = null;
+            let currentImageIndex = 0;
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let touchEndX = 0;
+            let touchEndY = 0;
+            let infoPanelVisible = true;
+            let isDragging = false;
+            
+            // Initialize first section as active
+            const activeSection = document.querySelector('.category-section.active');
+            if (activeSection) {
+                activeSection.removeAttribute('hidden');
+            }
+            
+            // Preload images for better performance
+            function preloadImages() {
+                const images = document.querySelectorAll('.card-image');
+                images.forEach(img => {
+                    const preload = new Image();
+                    preload.src = img.src;
+                    preload.onload = () => {
+                        img.style.opacity = '1';
+                        img.style.filter = 'brightness(1.05) contrast(1.1)';
+                    };
+                });
+            }
+            
+            // Initialize image preloading
+            preloadImages();
+            
+            // Tab switching
+            tabs.forEach(tab => {
+                tab.addEventListener('click', () => {
+                    const category = tab.dataset.category;
+                    
+                    // Update tabs
+                    tabs.forEach(t => {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    tab.classList.add('active');
+                    tab.setAttribute('aria-selected', 'true');
+                    
+                    // Update sections
+                    sections.forEach(section => {
+                        section.classList.remove('active');
+                        section.setAttribute('hidden', '');
+                    });
+                    
+                    const targetSection = document.getElementById(category);
+                    if (targetSection) {
+                        targetSection.classList.add('active');
+                        targetSection.removeAttribute('hidden');
+                        
+                        // Preload images for the new section
+                        setTimeout(preloadImages, 100);
+                        setTimeout(optimizeImageQuality, 150);
+                    }
+                });
+            });
+            
+            // Enhanced Lightbox functionality with mobile optimization
+            const artCards = document.querySelectorAll('.art-card');
+            
+            artCards.forEach(card => {
+                const imageContainer = card.querySelector('.card-image-container');
+                
+                imageContainer.addEventListener('click', (e) => {
+                    if (isDragging) {
+                        isDragging = false;
+                        return;
+                    }
+                    e.preventDefault();
+                    openLightbox(imageContainer);
+                });
+                
+                // Keyboard support for cards
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        openLightbox(imageContainer);
+                    }
+                });
+            });
+            
+            function openLightbox(container) {
+                try {
+                    // Get artwork data
+                    const artworkData = {
+                        title: container.dataset.title,
+                        artist: container.dataset.artist,
+                        meta: container.dataset.meta,
+                        description: container.dataset.description,
+                        dimensions: container.dataset.dimensions,
+                        location: container.dataset.location,
+                        images: JSON.parse(container.dataset.images)
+                    };
+                    
+                    currentArtwork = artworkData;
+                    currentImageIndex = 0;
+                    
+                    // Load first image
+                    const firstImageUrl = currentArtwork.images[0];
+                    lightboxImage.style.opacity = '0';
+                    
+                    const img = new Image();
+                    img.onload = () => {
+                        lightboxImage.src = firstImageUrl;
+                        lightboxImage.alt = `${currentArtwork.title} - Image 1`;
+                        setTimeout(() => {
+                            lightboxImage.style.opacity = '1';
+                            lightboxImage.style.filter = 'brightness(1.05) contrast(1.1)';
+                            
+                            // Mobile-specific optimizations
+                            if (isMobile) {
+                                // Force layout calculation for better rendering
+                                lightboxImage.getBoundingClientRect();
+                                
+                                // Adjust image size for mobile screens
+                                adjustImageForMobile();
+                            }
+                        }, 50);
+                    };
+                    img.onerror = () => {
+                        console.error('Failed to load image:', firstImageUrl);
+                        lightboxImage.style.opacity = '1';
+                        lightboxImage.alt = 'Image failed to load';
+                    };
+                    img.src = firstImageUrl;
+                    
+                    // Update content
+                    updateLightboxContent();
+                    updateCounter();
+                    
+                    // Show info panel
+                    infoPanelVisible = true;
+                    lightboxInfoPanel.classList.remove('hidden');
+                    
+                    // Show lightbox with enhanced mobile support
+                    lightbox.classList.add('active');
+                    document.body.classList.add('lightbox-open');
+                    
+                    // Lock body scroll
+                    document.body.style.overflow = 'hidden';
+                    document.body.style.touchAction = 'none';
+                    
+                    // Focus close button for accessibility
+                    setTimeout(() => {
+                        lightboxClose.focus();
+                        
+                        // Mobile-specific optimizations
+                        if (isMobile) {
+                            // Hide swipe hint after 5 seconds
+                            setTimeout(() => {
+                                const swipeHint = document.querySelector('.swipe-hint');
+                                if (swipeHint) {
+                                    swipeHint.style.opacity = '0';
+                                    swipeHint.style.transition = 'opacity 0.5s ease';
+                                }
+                            }, 5000);
+                        }
+                    }, 100);
+                    
+                    // Optimize lightbox image quality
+                    setTimeout(optimizeImageQuality, 100);
+                    
+                } catch (error) {
+                    console.error('Error loading artwork:', error);
+                }
+            }
+            
+            function adjustImageForMobile() {
+                if (!isMobile) return;
+                
+                const viewportHeight = window.innerHeight;
+                const viewportWidth = window.innerWidth;
+                const img = lightboxImage;
+                
+                // Calculate optimal image size for mobile
+                const maxHeight = viewportHeight * 0.85; // Leave space for controls
+                const maxWidth = viewportWidth * 0.95; // Leave small margins
+                
+                img.style.maxHeight = `${maxHeight}px`;
+                img.style.maxWidth = `${maxWidth}px`;
+                
+                // Center the image
+                img.style.margin = 'auto';
+                
+                // Ensure image is properly positioned
+                setTimeout(() => {
+                    img.getBoundingClientRect();
+                }, 10);
+            }
+            
+            function updateLightboxContent() {
+                if (!currentArtwork) return;
+                
+                lightboxTitle.textContent = currentArtwork.title;
+                lightboxArtist.textContent = currentArtwork.artist;
+                lightboxMeta.textContent = currentArtwork.meta;
+                lightboxDescription.textContent = currentArtwork.description;
+                
+                // Update additional details
+                lightboxDetails.innerHTML = '';
+                if (currentArtwork.dimensions) {
+                    const dimElement = document.createElement('p');
+                    dimElement.textContent = `Dimensions: ${currentArtwork.dimensions}`;
+                    dimElement.style.marginBottom = '0.5rem';
+                    lightboxDetails.appendChild(dimElement);
+                }
+                if (currentArtwork.location) {
+                    const locElement = document.createElement('p');
+                    locElement.textContent = `Location: ${currentArtwork.location}`;
+                    lightboxDetails.appendChild(locElement);
+                }
+            }
+            
+            function closeLightbox() {
+                lightbox.classList.remove('active');
+                document.body.classList.remove('lightbox-open');
+                document.body.style.overflow = '';
+                document.body.style.touchAction = '';
+                
+                // Reset image styles
+                lightboxImage.style.maxHeight = '';
+                lightboxImage.style.maxWidth = '';
+                lightboxImage.style.margin = '';
+                
+                // Restore swipe hint
+                const swipeHint = document.querySelector('.swipe-hint');
+                if (swipeHint && isMobile) {
+                    swipeHint.style.opacity = '0';
+                    swipeHint.style.transition = '';
+                    setTimeout(() => {
+                        swipeHint.style.opacity = '';
+                        swipeHint.style.transition = '';
+                    }, 1000);
+                }
+            }
+            
+            function navigateLightbox(direction) {
+                if (!currentArtwork || !currentArtwork.images) return;
+                
+                if (direction === 'next') {
+                    currentImageIndex = (currentImageIndex + 1) % currentArtwork.images.length;
+                } else {
+                    currentImageIndex = (currentImageIndex - 1 + currentArtwork.images.length) % currentArtwork.images.length;
+                }
+                
+                // Fade out current image
+                lightboxImage.style.opacity = '0';
+                
+                // Load new image
+                setTimeout(() => {
+                    const newImageUrl = currentArtwork.images[currentImageIndex];
+                    const img = new Image();
+                    img.onload = () => {
+                        lightboxImage.src = newImageUrl;
+                        lightboxImage.alt = `${currentArtwork.title} - Image ${currentImageIndex + 1}`;
+                        setTimeout(() => {
+                            lightboxImage.style.opacity = '1';
+                            lightboxImage.style.filter = 'brightness(1.05) contrast(1.1)';
+                            
+                            // Mobile optimization for new image
+                            if (isMobile) {
+                                adjustImageForMobile();
+                            }
+                        }, 50);
+                    };
+                    img.onerror = () => {
+                        console.error('Failed to load image:', newImageUrl);
+                        lightboxImage.style.opacity = '1';
+                        lightboxImage.alt = 'Image failed to load';
+                    };
+                    img.src = newImageUrl;
+                    
+                    updateCounter();
+                }, 300);
+            }
+            
+            function updateCounter() {
+                if (!currentArtwork || !currentArtwork.images) return;
+                lightboxCounter.textContent = `${currentImageIndex + 1} / ${currentArtwork.images.length}`;
+            }
+            
+            function toggleInfoPanel() {
+                infoPanelVisible = !infoPanelVisible;
+                if (infoPanelVisible) {
+                    lightboxInfoPanel.classList.remove('hidden');
+                    lightboxToggleInfo.innerHTML = '<i class="fas fa-info"></i>';
+                } else {
+                    lightboxInfoPanel.classList.add('hidden');
+                    lightboxToggleInfo.innerHTML = '<i class="fas fa-chevron-up"></i>';
+                }
+            }
+            
+            // Enhanced Touch events for better mobile experience
+            lightboxImage.addEventListener('touchstart', (e) => {
+                if (e.touches.length === 1) {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                    isDragging = false;
+                }
+            }, { passive: true });
+            
+            lightboxImage.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                }
+            }, { passive: true });
+            
+            lightboxImage.addEventListener('touchend', (e) => {
+                if (!isDragging || e.changedTouches.length === 0) return;
+                
+                touchEndX = e.changedTouches[0].clientX;
+                touchEndY = e.changedTouches[0].clientY;
+                
+                // Calculate distance and angle for swipe detection
+                const deltaX = touchEndX - touchStartX;
+                const deltaY = touchEndY - touchStartY;
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                
+                // Only detect horizontal swipes (min distance 50px, max vertical deviation 100px)
+                if (distance > 50 && Math.abs(deltaY) < 100) {
+                    if (deltaX > 0) {
+                        // Swipe right - previous image
+                        navigateLightbox('prev');
+                    } else {
+                        // Swipe left - next image
+                        navigateLightbox('next');
+                    }
+                }
+                
+                isDragging = false;
+            }, { passive: true });
+            
+            // Also support touch on the entire lightbox container
+            lightbox.addEventListener('touchstart', (e) => {
+                // Only handle touches on the background (not on controls or images)
+                if (e.target === lightbox || e.target === lightboxImageContainer) {
+                    touchStartX = e.touches[0].clientX;
+                    touchStartY = e.touches[0].clientY;
+                }
+            }, { passive: true });
+            
+            lightbox.addEventListener('touchend', (e) => {
+                // Only handle background touches
+                if ((e.target === lightbox || e.target === lightboxImageContainer) && 
+                    e.changedTouches.length === 1) {
+                    
+                    touchEndX = e.changedTouches[0].clientX;
+                    touchEndY = e.changedTouches[0].clientY;
+                    
+                    const deltaX = touchEndX - touchStartX;
+                    const deltaY = touchEndY - touchStartY;
+                    const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                    
+                    // Close lightbox on tap (not swipe) on background
+                    if (distance < 10) {
+                        closeLightbox();
+                    }
+                }
+            }, { passive: true });
+            
+            // Lightbox event listeners
+            lightboxClose.addEventListener('click', closeLightbox);
+            lightboxPrev.addEventListener('click', () => navigateLightbox('prev'));
+            lightboxNext.addEventListener('click', () => navigateLightbox('next'));
+            lightboxToggleInfo.addEventListener('click', toggleInfoPanel);
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if (!lightbox.classList.contains('active')) return;
+                
+                switch (e.key) {
+                    case 'Escape':
+                        closeLightbox();
+                        break;
+                    case 'ArrowLeft':
+                        navigateLightbox('prev');
+                        break;
+                    case 'ArrowRight':
+                        navigateLightbox('next');
+                        break;
+                    case 'i':
+                    case 'I':
+                        toggleInfoPanel();
+                        break;
+                    case ' ':
+                        e.preventDefault(); // Prevent space from scrolling
+                        toggleInfoPanel();
+                        break;
+                }
+            });
+            
+            // Close lightbox when clicking on backdrop
+            lightbox.addEventListener('click', (e) => {
+                if (e.target === lightbox) {
+                    closeLightbox();
+                }
+            });
+            
+            // Handle window resize for mobile optimization
+            window.addEventListener('resize', () => {
+                if (lightbox.classList.contains('active') && isMobile) {
+                    adjustImageForMobile();
+                }
+            });
+            
+            // Handle orientation change
+            window.addEventListener('orientationchange', () => {
+                if (lightbox.classList.contains('active') && isMobile) {
+                    // Wait for orientation to complete
+                    setTimeout(() => {
+                        adjustImageForMobile();
+                    }, 300);
+                }
+            });
+            
+            // Smooth scrolling
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#' || href === '#contact') {
+                        e.preventDefault();
+                        const targetElement = href === '#' ? document.body : document.querySelector(href);
+                        if (targetElement) {
+                            window.scrollTo({
+                                top: targetElement.offsetTop - 100,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }
+                });
+            });
+            
+            // Initialize ARIA attributes
+            tabs.forEach((tab, index) => {
+                if (index === 0) {
+                    tab.setAttribute('aria-selected', 'true');
+                } else {
+                    tab.setAttribute('aria-selected', 'false');
+                }
+            });
+            
+            // Re-optimize images on window load
+            window.addEventListener('load', () => {
+                optimizeImageQuality();
+                preloadImages();
+            });
+            
+            // Prevent pinch zoom in lightbox on mobile
+            if (isMobile) {
+                document.addEventListener('gesturestart', (e) => {
+                    if (lightbox.classList.contains('active')) {
+                        e.preventDefault();
                     }
                 });
                 
-                // Toggle current item
-                item.classList.toggle('active');
-                
-                // Change icon
-                if (item.classList.contains('active')) {
-                    icon.className = 'fas fa-times';
-                } else {
-                    icon.className = 'fas fa-plus';
-                }
-            });
-        });
-        
-        // Open Google Maps Modal
-        const mapCard = document.getElementById('mapCard');
-        const mapModal = document.getElementById('mapModal');
-        const closeMap = document.getElementById('closeMap');
-        
-        mapCard.addEventListener('click', () => {
-            mapModal.classList.add('active');
-            document.body.style.overflow = 'hidden';
-            
-            // Hide loading after map loads
-            const mapLoading = document.getElementById('mapLoading');
-            const mapIframe = document.getElementById('embeddedGoogleMap');
-            
-            mapIframe.onload = function() {
-                setTimeout(() => {
-                    mapLoading.style.display = 'none';
-                }, 500);
-            };
-            
-            // Ensure map is loaded
-            if (mapIframe.src) {
-                setTimeout(() => {
-                    mapLoading.style.display = 'none';
-                }, 1000);
-            }
-        });
-        
-        // Close map modal
-        closeMap.addEventListener('click', () => {
-            mapModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        
-        // Close map modal when clicking outside
-        mapModal.addEventListener('click', (e) => {
-            if (e.target === mapModal) {
-                mapModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-        
-        // Copy coordinates functionality
-        const copyAddressBtn = document.getElementById('copyAddressBtn');
-        copyAddressBtn.addEventListener('click', () => {
-            const coordinates = `${yourLocation.lat}, ${yourLocation.lng}`;
-            
-            if (navigator.clipboard) {
-                navigator.clipboard.writeText(coordinates).then(() => {
-                    const originalHTML = copyAddressBtn.innerHTML;
-                    copyAddressBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                    
-                    setTimeout(() => {
-                        copyAddressBtn.innerHTML = originalHTML;
-                    }, 2000);
+                document.addEventListener('gesturechange', (e) => {
+                    if (lightbox.classList.contains('active')) {
+                        e.preventDefault();
+                    }
                 });
-            } else {
-                // Fallback for older browsers
-                const textArea = document.createElement('textarea');
-                textArea.value = coordinates;
-                document.body.appendChild(textArea);
-                textArea.select();
-                document.execCommand('copy');
-                document.body.removeChild(textArea);
                 
-                const originalHTML = copyAddressBtn.innerHTML;
-                copyAddressBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                
-                setTimeout(() => {
-                    copyAddressBtn.innerHTML = originalHTML;
-                }, 2000);
+                document.addEventListener('gestureend', (e) => {
+                    if (lightbox.classList.contains('active')) {
+                        e.preventDefault();
+                    }
+                });
             }
-        });
-        
-        // Form Submission
-        const contactForm = document.getElementById('contactForm');
-        const submitBtn = document.getElementById('submitBtn');
-        const successModal = document.getElementById('successModal');
-        const closeModal = document.getElementById('closeModal');
-        const notificationPanel = document.getElementById('notificationPanel');
-        const closeNotification = document.getElementById('closeNotification');
-        const formStatus = document.getElementById('formStatus');
-        
-        // Function to show form status message
-        function showFormStatus(message, type) {
-            formStatus.textContent = message;
-            formStatus.className = `form-status ${type}`;
-            
-            // Hide after 5 seconds if it's a success message
-            if (type === 'success') {
-                setTimeout(() => {
-                    formStatus.style.display = 'none';
-                }, 5000);
-            }
-        }
-        
-        // Function to show notification with form data
-        function showFormNotification(formData) {
-            // Get current time
-            const now = new Date();
-            const timeString = now.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'});
-            
-            // Update notification content
-            document.getElementById('notificationProjectType').textContent = 
-                formData.projectType || 'Not specified';
-            document.getElementById('notificationName').textContent = 
-                formData.name || 'Not specified';
-            document.getElementById('notificationEmail').textContent = 
-                formData.email || 'Not specified';
-            
-            // Truncate message if too long
-            const message = formData.message || 'Not specified';
-            const truncatedMessage = message.length > 50 ? message.substring(0, 50) + '...' : message;
-            document.getElementById('notificationMessage').textContent = truncatedMessage;
-            
-            document.getElementById('notificationTime').textContent = timeString;
-            
-            // Show notification
-            notificationPanel.classList.add('visible');
-            
-            // Auto-hide notification after 10 seconds
-            setTimeout(() => {
-                notificationPanel.classList.remove('visible');
-            }, 10000);
-        }
-        
-        // Main form submission handler
-        contactForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            
-            // Simple form validation
-            const name = document.getElementById('name').value.trim();
-            const email = document.getElementById('email').value.trim();
-            const message = document.getElementById('message').value.trim();
-            const projectType = document.getElementById('projectType').value;
-            
-            if (name === '' || email === '' || message === '' || projectType === '') {
-                showFormStatus('Please fill in all required fields.', 'error');
-                return;
-            }
-            
-            // Collect form data
-            const formData = {
-                name: name,
-                email: email,
-                phone: document.getElementById('phone').value.trim(),
-                projectType: document.getElementById('projectType').selectedOptions[0].text,
-                message: message
-            };
-            
-            // Show loading state
-            submitBtn.disabled = true;
-            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
-            
-            // Simulate form submission (in a real app, you would send to a server)
-            setTimeout(() => {
-                // Show notification with form data
-                showFormNotification(formData);
-                
-                // Show success message
-                showFormStatus('Your message has been sent successfully! We will respond within 24 hours.', 'success');
-                
-                // Reset form
-                contactForm.reset();
-                
-                // Show success modal after a delay
-                setTimeout(() => {
-                    successModal.classList.add('active');
-                    document.body.style.overflow = 'hidden';
-                }, 1000);
-                
-                // Log to console (for demonstration)
-                console.log('=== FORM SUBMISSION DETAILS ===');
-                console.log('Name:', formData.name);
-                console.log('Email:', formData.email);
-                console.log('Phone:', formData.phone);
-                console.log('Project Type:', formData.projectType);
-                console.log('Message:', formData.message);
-                console.log('Location:', yourLocation.address);
-                console.log('===============================');
-                
-                // Reset button state
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Send Message';
-            }, 1500);
-        });
-        
-        // Close modal
-        closeModal.addEventListener('click', () => {
-            successModal.classList.remove('active');
-            document.body.style.overflow = 'auto';
-        });
-        
-        // Close modal when clicking outside
-        successModal.addEventListener('click', (e) => {
-            if (e.target === successModal) {
-                successModal.classList.remove('active');
-                document.body.style.overflow = 'auto';
-            }
-        });
-        
-        // Close notification
-        closeNotification.addEventListener('click', () => {
-            notificationPanel.classList.remove('visible');
-        });
-        
-        // Copy Email Functionality
-        const copyButtons = document.querySelectorAll('.copy-btn');
-        
-        copyButtons.forEach(button => {
-            button.addEventListener('click', () => {
-                const textToCopy = button.getAttribute('data-text');
-                
-                // Use Clipboard API if available
-                if (navigator.clipboard) {
-                    navigator.clipboard.writeText(textToCopy).then(() => {
-                        const originalHTML = button.innerHTML;
-                        button.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                        
-                        setTimeout(() => {
-                            button.innerHTML = originalHTML;
-                        }, 2000);
-                    });
-                } else {
-                    // Fallback for older browsers
-                    const textArea = document.createElement('textarea');
-                    textArea.value = textToCopy;
-                    document.body.appendChild(textArea);
-                    textArea.select();
-                    document.execCommand('copy');
-                    document.body.removeChild(textArea);
-                    
-                    const originalHTML = button.innerHTML;
-                    button.innerHTML = '<i class="fas fa-check"></i> Copied!';
-                    
-                    setTimeout(() => {
-                        button.innerHTML = originalHTML;
-                    }, 2000);
-                }
-            });
-        });
-        
-        // Back to Top Button
-        const backToTop = document.getElementById('backToTop');
-        
-        window.addEventListener('scroll', () => {
-            if (window.pageYOffset > 300) {
-                backToTop.classList.add('visible');
-            } else {
-                backToTop.classList.remove('visible');
-            }
-        });
-        
-        backToTop.addEventListener('click', (e) => {
-            e.preventDefault();
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
-        
-        // Add animation on scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px'
-        };
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-        
-        // Observe elements for animation
-        const animatedElements = document.querySelectorAll('.contact-form, .info-card, .faq-item');
-        animatedElements.forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(20px)';
-            el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
-            observer.observe(el);
-        });
-        
-        // Initialize map with your location
-        document.addEventListener('DOMContentLoaded', function() {
-            console.log('Google Maps loaded with your location:');
-            console.log('Latitude:', yourLocation.lat);
-            console.log('Longitude:', yourLocation.lng);
-            console.log('Embed URL:', yourLocation.embedUrl);
         });
     </script>
 </body>
 </html>
-
